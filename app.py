@@ -32,6 +32,12 @@ def generate_numbers():
         'count': count
     })
 
+@app.route('/robots.txt')
+def robots():
+    return '''User-agent: *
+Allow: /
+Sitemap: https://sarcastic-lottery.vercel.app/sitemap.xml''', 200, {'Content-Type': 'text/plain'}
+
 
 @app.route('/lottery-info')
 def lottery_info():
