@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+
+{% block title %}Blog - Lottery Insights with Sarcasm | My Jackpot Numbers{% endblock %}
+
+{% block head %}
+<meta name="description" content="Sarcastic lottery insights, tips, and mathematical reality checks. Learn why your strategies don't work with humor and facts.">
+<meta name="keywords" content="lottery tips, lottery strategy, powerball tips, lottery odds, lottery advice">
+{% endblock %}
+
+{% block content %}
+<div class="container">
+    <header class="header">
+        <h1>Lottery Wisdom & Sarcasm</h1>
+        <p class="tagline">Educational content with a side of brutal honesty</p>
+    </header>
+
+    <div class="blog-posts">
+        {% for post in posts %}
+        <article class="blog-preview">
+            <h2><a href="/blog/{{ post.slug }}">{{ post.title }}</a></h2>
+            <p class="post-meta">{{ post.date }} • {{ post.read_time }} min read</p>
+            <p class="post-excerpt">{{ post.excerpt }}</p>
+            <a href="/blog/{{ post.slug }}" class="read-more">Read More →</a>
+        </article>
+        {% endfor %}
+    </div>
+
+    <div class="back-to-generator">
+        <a href="/" class="generate-btn">← Back to Number Generator</a>
+    </div>
+</div>
+{% endblock %}
