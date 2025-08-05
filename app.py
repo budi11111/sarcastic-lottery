@@ -19,7 +19,7 @@ def generate_numbers():
 
     # Generate multiple combinations if requested
     results = []
-    for _ in range(min(count, 10)):  # Limit to 10 combinations max
+    for _ in range(min(count, 100)):  # Limit to 10 combinations max
         numbers = lottery_gen.generate(lottery_type)
         results.append(numbers)
 
