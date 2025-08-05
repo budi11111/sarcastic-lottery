@@ -32,11 +32,24 @@ def generate_numbers():
         'count': count
     })
 
+@app.route('/sitemap.xml')
+def sitemap():
+    return '''<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <url>
+    <loc>https://sarcastic-lottery.vercel.app/</loc>
+    <changefreq>weekly</changefreq>
+    <priority>1.0</priority>
+    <lastmod>2024-01-01</lastmod>
+  </url>
+</urlset>''', 200, {'Content-Type': 'application/xml'}
+
 @app.route('/robots.txt')
 def robots():
     return '''User-agent: *
 Allow: /
 Sitemap: https://sarcastic-lottery.vercel.app/sitemap.xml''', 200, {'Content-Type': 'text/plain'}
+
 
 
 @app.route('/lottery-info')
