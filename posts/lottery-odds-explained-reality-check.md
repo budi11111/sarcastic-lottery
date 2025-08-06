@@ -1,5 +1,6 @@
 ---
 title: "Lottery Odds Explained: A Reality Check That Will Ruin Your Dreams"
+publish_date: "2025-08-06"
 read_time: "7"
 excerpt: "The mathematically brutal truth about your chances, with actual research and numbers that will make you question your life choices."
 meta_description: "Comprehensive guide to lottery odds with accurate statistics. Learn real Powerball, Mega Millions, and European lottery probabilities with research-backed facts."

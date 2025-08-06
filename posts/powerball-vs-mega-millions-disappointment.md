@@ -1,5 +1,6 @@
 ---
 title: "Powerball vs Mega Millions: Which Will Disappoint You More?"
+publish_date: "2025-08-06"
 read_time: "4"
 excerpt: "A comprehensive comparison of two excellent ways to not become rich."
 meta_description: "Compare Powerball and Mega Millions odds, jackpots, and your chances of winning. Spoiler: they're both terrible for your wallet."

@@ -4,7 +4,7 @@ from config import SARCASTIC_COMMENTS
 import random
 import os
 import markdown
-from datetime import datetime
+from datetime import datetime, time
 
 app = Flask(__name__)
 lottery_gen = LotteryGenerator()
@@ -111,7 +111,6 @@ def lottery_info():
 # Posts directory
 POSTS_DIRECTORY = os.path.join(os.path.dirname(__file__), 'posts')
 
-
 def load_post(slug):
     """Load a single blog post from markdown file"""
     filepath = os.path.join(POSTS_DIRECTORY, slug + '.md')
@@ -122,8 +121,8 @@ def load_post(slug):
         content = f.read()
 
     # Get file creation/modification date
-    # Use current date instead of file modification time
-    auto_date = datetime.now().strftime('%B %d, %Y')
+    file_stat = os.path.getmtime(filepath)
+    auto_date = datetime.fromtimestamp(file_stat).strftime('%B %d, %Y')
 
     # Parse front matter
     parts = content.split('---')
@@ -141,6 +140,17 @@ def load_post(slug):
             key, value = line.split(':', 1)
             meta[key.strip()] = value.strip().strip('"')
 
+    # CHECK IF ARTICLE SHOULD BE PUBLISHED YET - NEW CODE
+    publish_date_str = meta.get('publish_date', '')
+    if publish_date_str:
+        try:
+            from datetime import date
+            publish_date = datetime.strptime(publish_date_str, '%Y-%m-%d').date()
+            if publish_date > date.today():
+                return None  # Article not ready to publish yet
+        except ValueError:
+            pass  # Invalid date format, show article anyway
+
     # Convert markdown to HTML
     html_content = markdown.markdown(body)
 
@@ -152,10 +162,12 @@ def load_post(slug):
         'excerpt': meta.get('excerpt', ''),
         'meta_description': meta.get('meta_description', ''),
         'keywords': meta.get('keywords', ''),
-        'content': html_content
+        'content': html_content,
+        'publish_date': publish_date_str
     }
 
     return post
+
 
 
 def list_posts():
