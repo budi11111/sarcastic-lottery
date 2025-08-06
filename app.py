@@ -113,7 +113,6 @@ def lottery_info():
 # Posts directory
 POSTS_DIRECTORY = os.path.join(os.path.dirname(__file__), 'posts')
 
-
 def load_post(slug):
     """Load a single blog post from markdown file"""
     filepath = os.path.join(POSTS_DIRECTORY, slug + '.md')
@@ -122,10 +121,6 @@ def load_post(slug):
 
     with open(filepath, 'r', encoding='utf-8') as f:
         content = f.read()
-
-    # Get file creation/modification date
-    file_stat = os.path.getmtime(filepath)
-    auto_date = datetime.fromtimestamp(file_stat).strftime('%B %d, %Y')
 
     # Parse front matter
     parts = content.split('---')
@@ -143,8 +138,24 @@ def load_post(slug):
             key, value = line.split(':', 1)
             meta[key.strip()] = value.strip().strip('"')
 
-    # CHECK IF ARTICLE SHOULD BE PUBLISHED YET - NEW CODE
+    # Smart date handling - avoid file modification time completely
     publish_date_str = meta.get('publish_date', '')
+    display_date = meta.get('date', '')
+
+    if not display_date:
+        if publish_date_str:
+            # Use publish_date for display if no manual date specified
+            try:
+                pub_date_obj = datetime.strptime(publish_date_str, '%Y-%m-%d')
+                display_date = pub_date_obj.strftime('%B %d, %Y')
+            except ValueError:
+                # If publish_date is invalid, use current date
+                display_date = datetime.now().strftime('%B %d, %Y')
+        else:
+            # No publish_date either, use current date
+            display_date = datetime.now().strftime('%B %d, %Y')
+
+    # CHECK IF ARTICLE SHOULD BE PUBLISHED YET
     if publish_date_str:
         try:
             from datetime import date
@@ -160,7 +171,7 @@ def load_post(slug):
     post = {
         'slug': slug,
         'title': meta.get('title', 'Untitled'),
-        'date': meta.get('date', auto_date),
+        'date': display_date,
         'read_time': meta.get('read_time', '5'),
         'excerpt': meta.get('excerpt', ''),
         'meta_description': meta.get('meta_description', ''),
