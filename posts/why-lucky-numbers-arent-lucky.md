@@ -1,6 +1,5 @@
 ---
 title: "Why Your 'Lucky' Numbers Aren't Actually Lucky (A Statistical Reality Check)"
-date: "2024-01-15"
 read_time: "5"
 excerpt: "Spoiler alert: Math doesn't care about your birthday or anniversary date."
 meta_description: "Discover why lucky lottery numbers are statistically meaningless. Learn the mathematical truth behind lottery number selection with humor and facts."

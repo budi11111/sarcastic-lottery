@@ -4,6 +4,7 @@ from config import SARCASTIC_COMMENTS
 import random
 import os
 import markdown
+from datetime import datetime
 
 app = Flask(__name__)
 lottery_gen = LotteryGenerator()
@@ -91,7 +92,11 @@ def load_post(slug):
     with open(filepath, 'r', encoding='utf-8') as f:
         content = f.read()
 
-    # Parse front matter (metadata between --- markers)
+    # Get file creation/modification date
+    file_stat = os.path.getmtime(filepath)
+    auto_date = datetime.fromtimestamp(file_stat).strftime('%B %d, %Y')
+
+    # Parse front matter
     parts = content.split('---')
     if len(parts) >= 3:
         meta_raw = parts[1]
@@ -113,7 +118,7 @@ def load_post(slug):
     post = {
         'slug': slug,
         'title': meta.get('title', 'Untitled'),
-        'date': meta.get('date', ''),
+        'date': meta.get('date', auto_date),  # Use auto-date if no manual date
         'read_time': meta.get('read_time', '5'),
         'excerpt': meta.get('excerpt', ''),
         'meta_description': meta.get('meta_description', ''),
