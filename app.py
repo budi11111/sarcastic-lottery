@@ -80,10 +80,12 @@ def sitemap():
     <priority>0.8</priority>
   </url>'''
 
-    # Add each blog post to sitemap
+    # Add each PUBLISHED blog post to sitemap (list_posts already filters by publish_date)
     posts = list_posts()
     for post in posts:
-        sitemap_xml += f'''
+        # Double-check post exists (list_posts already filters, but safety first)
+        if post:
+            sitemap_xml += f'''
   <url>
     <loc>https://sarcastic-lottery.vercel.app/blog/{post['slug']}</loc>
     <changefreq>monthly</changefreq>
@@ -110,6 +112,7 @@ def lottery_info():
 
 # Posts directory
 POSTS_DIRECTORY = os.path.join(os.path.dirname(__file__), 'posts')
+
 
 def load_post(slug):
     """Load a single blog post from markdown file"""
@@ -167,7 +170,6 @@ def load_post(slug):
     }
 
     return post
-
 
 
 def list_posts():
