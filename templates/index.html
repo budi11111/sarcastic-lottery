@@ -15,7 +15,7 @@
     <header class="header">
         <div class="logo">
             <div class="logo-icon">
-                <i class="fas fa-trophy"></i>
+                <i class="fas fa-coins"></i>
             </div>
             <div class="logo-text">
                 <h1>My Jackpot Numbers</h1>
@@ -23,9 +23,9 @@
             </div>
         </div>
 
-        <!-- Navigation moved outside logo div -->
+        <!-- Navigation -->
         <div class="navigation">
-            <a href="/blog" class="nav-link">📖 Lottery Insights Blog</a>
+            <a href="/blog" class="nav-link">📚 Lottery Wisdom</a>
         </div>
 
         <!-- Reviews Carousel -->
@@ -74,6 +74,45 @@
                     <small class="lottery-details">5 from 50 • 2 from 12</small>
                 </div>
             </button>
+
+            <button class="lottery-btn custom-btn" data-type="custom">
+                <div class="lottery-info">
+                    <span class="lottery-name">🎲 Custom</span>
+                    <small class="lottery-details">Your numbers, your disappointment</small>
+                </div>
+            </button>
+        </div>
+    </section>
+
+    <!-- Custom Lottery Configuration (Hidden by default) -->
+    <section id="customConfig" class="custom-config hidden">
+        <div class="custom-form">
+            <h3>Create Your Custom Lottery</h3>
+
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="mainCount">Pick</label>
+                    <input type="number" id="mainCount" min="1" max="100" value="5" class="custom-input">
+                    <span class="form-text">numbers from 1 to</span>
+                    <input type="number" id="mainMax" min="1" max="10000" value="50" class="custom-input">
+                </div>
+            </div>
+
+            <div class="form-row">
+                <div class="checkbox-group">
+                    <input type="checkbox" id="hasExtra" class="custom-checkbox">
+                    <label for="hasExtra">This lottery has extra/bonus numbers</label>
+                </div>
+            </div>
+
+            <div id="extraConfig" class="extra-config hidden">
+                <div class="form-group">
+                    <label for="extraCount">Pick</label>
+                    <input type="number" id="extraCount" min="1" max="20" value="1" class="custom-input">
+                    <span class="form-text">extra numbers from 1 to</span>
+                    <input type="number" id="extraMax" min="1" max="1000" value="20" class="custom-input">
+                </div>
+            </div>
         </div>
     </section>
 
@@ -92,7 +131,6 @@
                 <option value="1">1 combination</option>
                 <option value="2">2 combinations</option>
                 <option value="3">3 combinations</option>
-                <option value="4">4 combinations</option>
                 <option value="5">5 combinations</option>
                 <option value="10">10 combinations</option>
                 <option value="20">20 combinations</option>
@@ -140,7 +178,7 @@
     <!-- Loading Animation -->
     <div id="loading" class="loading hidden">
         <div class="loading-spinner"></div>
-        <p>Calculating your inevitable disappointment...</p>
+        <p id="loadingText">Calculating your inevitable disappointment...</p>
     </div>
 </div>
 
@@ -148,7 +186,7 @@
 <footer class="footer">
     <div class="footer-content">
         <p id="footerText">Remember: The house always wins, but at least you'll lose with style.</p>
-        <small>© 2024 My Jackpot Numbers. Crushing dreams professionally since today.</small>
+        <small>© 2025 My Jackpot Numbers. Crushing dreams professionally since forever.</small>
     </div>
 </footer>
 {% endblock %}

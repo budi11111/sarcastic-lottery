@@ -22,7 +22,7 @@ def generate_numbers():
 
     # Generate multiple combinations if requested
     results = []
-    for _ in range(min(count, 100)):  # Limit to 10 combinations max
+    for _ in range(min(count, 100)):
         numbers = lottery_gen.generate(lottery_type)
         results.append(numbers)
 
@@ -34,6 +34,35 @@ def generate_numbers():
         'lottery_type': lottery_type,
         'count': count
     })
+
+
+@app.route('/generate-custom')
+def generate_custom_numbers():
+    try:
+        main_count = int(request.args.get('main_count', 5))
+        main_max = int(request.args.get('main_max', 50))
+        extra_count = int(request.args.get('extra_count', 0))
+        extra_max = int(request.args.get('extra_max', 0))
+        count = int(request.args.get('count', 1))
+
+        results = []
+        for _ in range(min(count, 100)):
+            numbers = lottery_gen.generate_custom(main_count, main_max, extra_count, extra_max)
+            results.append(numbers)
+
+        comment = random.choice(SARCASTIC_COMMENTS)
+
+        return jsonify({
+            'results': results,
+            'comment': comment,
+            'lottery_type': 'custom',
+            'count': count
+        })
+
+    except ValueError as e:
+        return jsonify({
+            'error': str(e)
+        }), 400
 
 
 @app.route('/sitemap.xml')
@@ -118,7 +147,7 @@ def load_post(slug):
     post = {
         'slug': slug,
         'title': meta.get('title', 'Untitled'),
-        'date': meta.get('date', auto_date),  # Use auto-date if no manual date
+        'date': meta.get('date', auto_date),
         'read_time': meta.get('read_time', '5'),
         'excerpt': meta.get('excerpt', ''),
         'meta_description': meta.get('meta_description', ''),
