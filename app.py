@@ -122,8 +122,8 @@ def load_post(slug):
         content = f.read()
 
     # Get file creation/modification date
-    file_stat = os.path.getmtime(filepath)
-    auto_date = datetime.fromtimestamp(file_stat).strftime('%B %d, %Y')
+    # Use current date instead of file modification time
+    auto_date = datetime.now().strftime('%B %d, %Y')
 
     # Parse front matter
     parts = content.split('---')
