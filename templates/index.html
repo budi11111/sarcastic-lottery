@@ -25,10 +25,9 @@
 
         <!-- Navigation -->
         <div class="navigation">
-            <a href="/blog" class="nav-link">📚 Lottery Wisdom</a>
-            <div class="blog-preview-toggle">
-                <button id="blogPreviewBtn" class="blog-preview-btn">Latest Insights ▼</button>
-                <div id="blogPreview" class="blog-preview-dropdown hidden">
+            <div class="blog-nav-wrapper">
+                <a href="/blog" class="nav-link lottery-wisdom-link">📚 Lottery Wisdom</a>
+                <div class="lottery-wisdom-dropdown hidden">
                     {% for post in recent_posts[:3] %}
                     <div class="blog-preview-item">
                         <a href="/blog/{{ post.slug }}">{{ post.title }}</a>
@@ -41,25 +40,14 @@
                 </div>
             </div>
         </div>
-
-        <!-- Testimonial Reviews Carousel -->
-        <div class="reviews-carousel-container">
-            <div class="reviews-carousel" id="reviewsCarousel">
-                <div class="carousel-track" id="reviewsTrack">
-                    <!-- Reviews will be inserted by JavaScript -->
-                </div>
-            </div>
-            <div class="carousel-indicators" id="reviewsIndicators">
-                <!-- Indicators will be inserted by JavaScript -->
-            </div>
-        </div>
     </header>
 
-    <!-- CORE FUNCTIONALITY MOVED UP - Lottery Type Selector -->
-    <section class="lottery-selector priority-section">
+    <!-- UNIFIED GENERATOR SECTION - MOVED ABOVE CAROUSEL -->
+    <section class="unified-generator priority-section">
         <h2 id="selectorTitle">Choose Your Wallet-Emptying Adventure</h2>
-        <p class="section-subtitle" id="selectorSubtitle">All paths lead to the same destination: disappointment</p>
+        <p class="section-subtitle" id="selectorSubtitle">Spoiler alert: the house always wins</p>
 
+        <!-- Lottery Type Selector -->
         <div class="lottery-grid">
             <button class="lottery-btn active" data-type="powerball">
                 <div class="lottery-info">
@@ -96,44 +84,42 @@
                 </div>
             </button>
         </div>
-    </section>
 
-    <!-- Custom Lottery Configuration (Hidden by default) -->
-    <section id="customConfig" class="custom-config hidden">
-        <div class="custom-form">
-            <h3>Create Your Custom Lottery</h3>
+        <!-- Custom Lottery Configuration (Hidden by default) -->
+        <div id="customConfig" class="custom-config hidden">
+            <div class="custom-form">
+                <h3>Create Your Custom Lottery</h3>
 
-            <div class="form-row">
-                <div class="form-group">
-                    <label for="mainCount">Pick</label>
-                    <input type="number" id="mainCount" min="1" max="100" value="5" class="custom-input">
-                    <span class="form-text">numbers from 1 to</span>
-                    <input type="number" id="mainMax" min="1" max="10000" value="50" class="custom-input">
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="mainCount">Pick</label>
+                        <input type="number" id="mainCount" min="1" max="100" value="5" class="custom-input">
+                        <span class="form-text">numbers from 1 to</span>
+                        <input type="number" id="mainMax" min="1" max="10000" value="50" class="custom-input">
+                    </div>
                 </div>
-            </div>
 
-            <div class="form-row">
-                <div class="checkbox-group">
-                    <input type="checkbox" id="hasExtra" class="custom-checkbox">
-                    <label for="hasExtra">This lottery has extra/bonus numbers</label>
+                <div class="form-row">
+                    <div class="checkbox-group">
+                        <input type="checkbox" id="hasExtra" class="custom-checkbox">
+                        <label for="hasExtra">This lottery has extra/bonus numbers</label>
+                    </div>
                 </div>
-            </div>
 
-            <div id="extraConfig" class="extra-config hidden">
-                <div class="form-group">
-                    <label for="extraCount">Pick</label>
-                    <input type="number" id="extraCount" min="1" max="20" value="1" class="custom-input">
-                    <span class="form-text">extra numbers from 1 to</span>
-                    <input type="number" id="extraMax" min="1" max="1000" value="20" class="custom-input">
+                <div id="extraConfig" class="extra-config hidden">
+                    <div class="form-group">
+                        <label for="extraCount">Pick</label>
+                        <input type="number" id="extraCount" min="1" max="20" value="1" class="custom-input">
+                        <span class="form-text">extra numbers from 1 to</span>
+                        <input type="number" id="extraMax" min="1" max="1000" value="20" class="custom-input">
+                    </div>
                 </div>
             </div>
         </div>
-    </section>
 
-    <!-- CORE FUNCTIONALITY MOVED UP - Options and Generate Button -->
-    <section class="core-actions">
-        <!-- Options -->
-        <div class="options-section">
+        <!-- INTEGRATED: Combinations & Generate Section -->
+        <div class="generator-controls">
+            <!-- Options -->
             <div class="option-card">
                 <label for="combinations">Combinations to Generate</label>
                 <select id="combinations">
@@ -147,17 +133,29 @@
                     <option value="100">100 combinations</option>
                 </select>
             </div>
-            <p class="option-hint" id="optionHint">Pro tip: More combinations = more creative ways to lose!</p>
-        </div>
+            <p class="option-hint" id="optionHint">Remember: Each additional combination is another way to not win!</p>
 
-        <!-- Generate Button -->
-        <div class="generate-section">
-            <button id="generateBtn" class="generate-btn">
-                <span>Generate My Disappointment</span>
-            </button>
-            <p class="generate-hint" id="generateHint">Click to convert hope into statistical reality</p>
+            <!-- Generate Button -->
+            <div class="generate-section">
+                <button id="generateBtn" class="generate-btn">
+                    <span>Generate My Disappointment</span>
+                </button>
+                <p class="generate-hint" id="generateHint">Press to contribute to infrastructure development</p>
+            </div>
         </div>
     </section>
+
+    <!-- Testimonial Reviews Carousel - MOVED BELOW GENERATOR -->
+    <div class="reviews-carousel-container">
+        <div class="reviews-carousel" id="reviewsCarousel">
+            <div class="carousel-track" id="reviewsTrack">
+                <!-- Reviews will be inserted by JavaScript -->
+            </div>
+        </div>
+        <div class="carousel-indicators" id="reviewsIndicators">
+            <!-- Indicators will be inserted by JavaScript -->
+        </div>
+    </div>
 
     <!-- Results -->
     <section id="results" class="results-section hidden">
@@ -185,7 +183,7 @@
         </div>
     </section>
 
-    <!-- Wisdom Section (Moved Down) -->
+    <!-- Wisdom Section -->
     <section class="wisdom-section">
         <div class="wisdom-card">
             <p class="wisdom-text" id="wisdomText">The lottery: a tax on people who are bad at math, but excellent at hope.</p>
@@ -208,27 +206,29 @@
 </footer>
 
 <script>
-// Blog preview dropdown functionality
+// Lottery Wisdom hover dropdown functionality
 document.addEventListener('DOMContentLoaded', function() {
-    const blogBtn = document.getElementById('blogPreviewBtn');
-    const blogPreview = document.getElementById('blogPreview');
+    const blogNavWrapper = document.querySelector('.blog-nav-wrapper');
+    const dropdown = document.querySelector('.lottery-wisdom-dropdown');
 
-    if (blogBtn && blogPreview) {
-        blogBtn.addEventListener('click', function(e) {
-            e.stopPropagation();
-            blogPreview.classList.toggle('hidden');
-            blogBtn.textContent = blogPreview.classList.contains('hidden') ?
-                'Latest Insights ▼' : 'Latest Insights ▲';
+    if (blogNavWrapper && dropdown) {
+        // Show dropdown on hover
+        blogNavWrapper.addEventListener('mouseenter', function() {
+            dropdown.classList.remove('hidden');
         });
 
-        // Close dropdown when clicking outside
-        document.addEventListener('click', function() {
-            blogPreview.classList.add('hidden');
-            blogBtn.textContent = 'Latest Insights ▼';
+        // Hide dropdown when mouse leaves
+        blogNavWrapper.addEventListener('mouseleave', function() {
+            dropdown.classList.add('hidden');
         });
 
-        blogPreview.addEventListener('click', function(e) {
-            e.stopPropagation();
+        // Keep dropdown visible when hovering over it
+        dropdown.addEventListener('mouseenter', function() {
+            dropdown.classList.remove('hidden');
+        });
+
+        dropdown.addEventListener('mouseleave', function() {
+            dropdown.classList.add('hidden');
         });
     }
 });
