@@ -26,9 +26,23 @@
         <!-- Navigation -->
         <div class="navigation">
             <a href="/blog" class="nav-link">📚 Lottery Wisdom</a>
+            <div class="blog-preview-toggle">
+                <button id="blogPreviewBtn" class="blog-preview-btn">Latest Insights ▼</button>
+                <div id="blogPreview" class="blog-preview-dropdown hidden">
+                    {% for post in recent_posts[:3] %}
+                    <div class="blog-preview-item">
+                        <a href="/blog/{{ post.slug }}">{{ post.title }}</a>
+                        <span class="preview-date">{{ post.date }}</span>
+                    </div>
+                    {% endfor %}
+                    <div class="blog-preview-footer">
+                        <a href="/blog">View All Posts →</a>
+                    </div>
+                </div>
+            </div>
         </div>
 
-        <!-- Reviews Carousel -->
+        <!-- Testimonial Reviews Carousel -->
         <div class="reviews-carousel-container">
             <div class="reviews-carousel" id="reviewsCarousel">
                 <div class="carousel-track" id="reviewsTrack">
@@ -41,9 +55,9 @@
         </div>
     </header>
 
-    <!-- Lottery Type Selector -->
-    <section class="lottery-selector">
-        <h2 id="selectorTitle">Choose Your Method of Financial Destruction</h2>
+    <!-- CORE FUNCTIONALITY MOVED UP - Lottery Type Selector -->
+    <section class="lottery-selector priority-section">
+        <h2 id="selectorTitle">Choose Your Wallet-Emptying Adventure</h2>
         <p class="section-subtitle" id="selectorSubtitle">All paths lead to the same destination: disappointment</p>
 
         <div class="lottery-grid">
@@ -116,37 +130,33 @@
         </div>
     </section>
 
-    <!-- Wisdom Section -->
-    <section class="wisdom-section">
-        <div class="wisdom-card">
-            <p class="wisdom-text" id="wisdomText">The lottery: a tax on people who are bad at math, but excellent at hope.</p>
+    <!-- CORE FUNCTIONALITY MOVED UP - Options and Generate Button -->
+    <section class="core-actions">
+        <!-- Options -->
+        <div class="options-section">
+            <div class="option-card">
+                <label for="combinations">Combinations to Generate</label>
+                <select id="combinations">
+                    <option value="1">1 combination</option>
+                    <option value="2">2 combinations</option>
+                    <option value="3">3 combinations</option>
+                    <option value="5">5 combinations</option>
+                    <option value="10">10 combinations</option>
+                    <option value="20">20 combinations</option>
+                    <option value="50">50 combinations</option>
+                    <option value="100">100 combinations</option>
+                </select>
+            </div>
+            <p class="option-hint" id="optionHint">Pro tip: More combinations = more creative ways to lose!</p>
         </div>
-    </section>
 
-    <!-- Options -->
-    <section class="options-section">
-        <div class="option-card">
-            <label for="combinations">Combinations to Generate</label>
-            <select id="combinations">
-                <option value="1">1 combination</option>
-                <option value="2">2 combinations</option>
-                <option value="3">3 combinations</option>
-                <option value="5">5 combinations</option>
-                <option value="10">10 combinations</option>
-                <option value="20">20 combinations</option>
-                <option value="50">50 combinations</option>
-                <option value="100">100 combinations</option>
-            </select>
+        <!-- Generate Button -->
+        <div class="generate-section">
+            <button id="generateBtn" class="generate-btn">
+                <span>Generate My Disappointment</span>
+            </button>
+            <p class="generate-hint" id="generateHint">Click to convert hope into statistical reality</p>
         </div>
-        <p class="option-hint" id="optionHint">Pro tip: More combinations = more creative ways to lose!</p>
-    </section>
-
-    <!-- Generate Button -->
-    <section class="generate-section">
-        <button id="generateBtn" class="generate-btn">
-            <span>Generate My Disappointment</span>
-        </button>
-        <p class="generate-hint" id="generateHint">Click to convert hope into statistical reality</p>
     </section>
 
     <!-- Results -->
@@ -175,6 +185,13 @@
         </div>
     </section>
 
+    <!-- Wisdom Section (Moved Down) -->
+    <section class="wisdom-section">
+        <div class="wisdom-card">
+            <p class="wisdom-text" id="wisdomText">The lottery: a tax on people who are bad at math, but excellent at hope.</p>
+        </div>
+    </section>
+
     <!-- Loading Animation -->
     <div id="loading" class="loading hidden">
         <div class="loading-spinner"></div>
@@ -189,4 +206,31 @@
         <small>© 2025 My Jackpot Numbers. Crushing dreams professionally since forever.</small>
     </div>
 </footer>
+
+<script>
+// Blog preview dropdown functionality
+document.addEventListener('DOMContentLoaded', function() {
+    const blogBtn = document.getElementById('blogPreviewBtn');
+    const blogPreview = document.getElementById('blogPreview');
+
+    if (blogBtn && blogPreview) {
+        blogBtn.addEventListener('click', function(e) {
+            e.stopPropagation();
+            blogPreview.classList.toggle('hidden');
+            blogBtn.textContent = blogPreview.classList.contains('hidden') ?
+                'Latest Insights ▼' : 'Latest Insights ▲';
+        });
+
+        // Close dropdown when clicking outside
+        document.addEventListener('click', function() {
+            blogPreview.classList.add('hidden');
+            blogBtn.textContent = 'Latest Insights ▼';
+        });
+
+        blogPreview.addEventListener('click', function(e) {
+            e.stopPropagation();
+        });
+    }
+});
+</script>
 {% endblock %}

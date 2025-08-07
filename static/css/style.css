@@ -129,6 +129,11 @@ body {
 .navigation {
     text-align: center;
     margin: var(--spacing-lg) 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: var(--spacing-md);
+    flex-wrap: wrap;
 }
 
 .nav-link {
@@ -151,7 +156,93 @@ body {
     box-shadow: var(--shadow-md);
 }
 
-/* Reviews Carousel */
+/* Blog Preview Dropdown */
+.blog-preview-toggle {
+    position: relative;
+}
+
+.blog-preview-btn {
+    background: var(--gray-100);
+    color: var(--gray-800);
+    border: 1px solid var(--gray-200);
+    padding: var(--spacing-sm) var(--spacing-md);
+    border-radius: var(--radius-lg);
+    font-size: 0.9rem;
+    font-weight: var(--font-weight-medium);
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.blog-preview-btn:hover {
+    background: var(--secondary-color);
+    color: var(--white);
+    transform: translateY(-1px);
+    box-shadow: var(--shadow-md);
+}
+
+.blog-preview-dropdown {
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    background: var(--white);
+    border: 1px solid var(--gray-200);
+    border-radius: var(--radius-md);
+    box-shadow: var(--shadow-lg);
+    min-width: 300px;
+    z-index: 1000;
+    margin-top: var(--spacing-sm);
+}
+
+.blog-preview-item {
+    padding: var(--spacing-md);
+    border-bottom: 1px solid var(--gray-100);
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-xs);
+}
+
+.blog-preview-item:last-of-type {
+    border-bottom: none;
+}
+
+.blog-preview-item a {
+    color: var(--gray-800);
+    text-decoration: none;
+    font-weight: var(--font-weight-medium);
+    font-size: 0.9rem;
+    line-height: 1.3;
+    transition: color 0.2s ease;
+}
+
+.blog-preview-item a:hover {
+    color: var(--primary-color);
+}
+
+.preview-date {
+    font-size: 0.8rem;
+    color: var(--gray-500);
+}
+
+.blog-preview-footer {
+    padding: var(--spacing-md);
+    text-align: center;
+    background: var(--gray-50);
+    border-radius: 0 0 var(--radius-md) var(--radius-md);
+}
+
+.blog-preview-footer a {
+    color: var(--primary-color);
+    text-decoration: none;
+    font-weight: var(--font-weight-medium);
+    font-size: 0.9rem;
+}
+
+.blog-preview-footer a:hover {
+    text-decoration: underline;
+}
+
+/* FIXED Reviews Carousel */
 .reviews-carousel-container {
     margin-top: var(--spacing-lg);
 }
@@ -166,16 +257,29 @@ body {
 .carousel-track {
     display: flex;
     transition: transform 0.5s ease;
-    gap: var(--spacing-md);
+    width: 100%;
+}
+
+.carousel-slide {
+    min-width: 100%;
+    display: flex !important;
+    gap: var(--spacing-md) !important;
+    justify-content: center;
+    align-items: stretch;
+    padding: 0 var(--spacing-md);
+    box-sizing: border-box;
 }
 
 .review-slide {
-    min-width: calc(33.333% - var(--spacing-md));
+    flex: 1;
+    max-width: calc(33.333% - var(--spacing-md));
     background: var(--gray-50);
     padding: var(--spacing-md);
     border-radius: var(--radius-md);
     border-left: 3px solid var(--warning-color);
     box-sizing: border-box;
+    display: flex;
+    align-items: center;
 }
 
 .review-slide p {
@@ -184,6 +288,7 @@ body {
     color: var(--gray-600);
     line-height: 1.5;
     margin: 0;
+    text-align: center;
 }
 
 .review-slide span {
@@ -210,6 +315,21 @@ body {
 .indicator.active {
     background: var(--primary-color);
     transform: scale(1.2);
+}
+
+/* Priority Section - Core Functionality */
+.priority-section {
+    background: linear-gradient(135deg, var(--white), var(--gray-50));
+    border: 2px solid var(--primary-color);
+    border-radius: var(--radius-xl);
+    padding: var(--spacing-xl);
+    margin-bottom: var(--spacing-xl);
+    box-shadow: var(--shadow-lg);
+}
+
+.priority-section h2 {
+    color: var(--primary-color) !important;
+    text-shadow: 0 1px 2px rgba(0, 122, 255, 0.1);
 }
 
 /* Enhanced Lottery Selector */
@@ -409,29 +529,14 @@ body {
     max-height: 100px;
 }
 
-/* Wisdom Section */
-.wisdom-section {
+/* Core Actions Section */
+.core-actions {
+    background: var(--white);
+    border-radius: var(--radius-xl);
+    padding: var(--spacing-xl);
     margin-bottom: var(--spacing-xl);
-    display: flex;
-    justify-content: center;
-}
-
-.wisdom-card {
-    background: linear-gradient(135deg, var(--gray-100), var(--gray-50));
-    padding: var(--spacing-lg);
-    border-radius: var(--radius-lg);
-    border-left: 4px solid var(--secondary-color);
-    max-width: 600px;
-    text-align: center;
-    box-shadow: var(--shadow-sm);
-}
-
-.wisdom-text {
-    font-size: 1rem;
-    color: var(--gray-700);
-    font-style: italic;
-    font-weight: var(--font-weight-medium);
-    line-height: 1.6;
+    box-shadow: var(--shadow-lg);
+    border: 1px solid var(--gray-200);
 }
 
 /* Options Section */
@@ -441,7 +546,7 @@ body {
 }
 
 .option-card {
-    background: var(--white);
+    background: var(--gray-50);
     padding: var(--spacing-lg);
     border-radius: var(--radius-lg);
     box-shadow: var(--shadow-sm);
@@ -487,7 +592,7 @@ body {
 /* Enhanced Generate Button */
 .generate-section {
     text-align: center;
-    margin-bottom: var(--spacing-xl);
+    margin-bottom: 0;
 }
 
 .generate-btn {
@@ -543,6 +648,31 @@ body {
     font-style: italic;
 }
 
+/* Wisdom Section */
+.wisdom-section {
+    margin-bottom: var(--spacing-xl);
+    display: flex;
+    justify-content: center;
+}
+
+.wisdom-card {
+    background: linear-gradient(135deg, var(--gray-100), var(--gray-50));
+    padding: var(--spacing-lg);
+    border-radius: var(--radius-lg);
+    border-left: 4px solid var(--secondary-color);
+    max-width: 600px;
+    text-align: center;
+    box-shadow: var(--shadow-sm);
+}
+
+.wisdom-text {
+    font-size: 1rem;
+    color: var(--gray-700);
+    font-style: italic;
+    font-weight: var(--font-weight-medium);
+    line-height: 1.6;
+}
+
 /* Results Section */
 .results-section {
     background: var(--white);
@@ -589,14 +719,6 @@ body {
     border-radius: var(--radius-lg);
     border: 1px solid var(--gray-200);
     box-shadow: var(--shadow-sm);
-}
-
-.lottery-name {
-    font-size: 0.85rem;
-    font-weight: var(--font-weight-semibold);
-    color: var(--gray-600);
-    text-transform: uppercase;
-    letter-spacing: 0.5px;
 }
 
 .numbers-display {
@@ -956,8 +1078,25 @@ body {
         font-size: 1.6rem;
     }
 
+    .navigation {
+        flex-direction: column;
+        gap: var(--spacing-sm);
+    }
+
+    .carousel-slide {
+        flex-direction: column !important;
+        padding: var(--spacing-sm);
+    }
+
     .review-slide {
-        min-width: 100%;
+        max-width: 100%;
+        margin-bottom: var(--spacing-sm);
+    }
+
+    .blog-preview-dropdown {
+        min-width: 250px;
+        left: 0;
+        transform: none;
     }
 
     .lottery-grid {
@@ -994,7 +1133,7 @@ body {
         font-size: 1rem;
     }
 
-    .nav-link {
+    .nav-link, .blog-preview-btn {
         font-size: 0.8rem;
         padding: var(--spacing-sm);
     }
@@ -1030,5 +1169,9 @@ body {
 
     .post-header h1 {
         font-size: 1.8rem;
+    }
+
+    .core-actions {
+        padding: var(--spacing-lg);
     }
 }

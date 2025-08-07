@@ -12,7 +12,9 @@ lottery_gen = LotteryGenerator()
 
 @app.route('/')
 def home():
-    return render_template('index.html')
+    # Get recent blog posts for homepage integration
+    recent_posts = list_posts()[:3]  # Get 3 most recent posts
+    return render_template('index.html', recent_posts=recent_posts)
 
 
 @app.route('/generate')
