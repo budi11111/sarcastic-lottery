@@ -159,7 +159,9 @@ body {
 /* Blog Navigation with Hover Dropdown */
 .blog-nav-wrapper {
     position: relative;
+    z-index: 10000;
 }
+
 
 .lottery-wisdom-link {
     background: var(--gray-100);
@@ -183,6 +185,7 @@ body {
 
 .lottery-wisdom-dropdown {
     position: absolute;
+    z-index: 10000;
     top: 100%;
     left: 50%;
     transform: translateX(-50%);
@@ -203,6 +206,13 @@ body {
     visibility: hidden;
     transform: translateX(-50%) translateY(-10px);
 }
+
+.unified-generator .results-section {
+    margin-top: var(--spacing-lg);
+    border-top: 1px solid var(--gray-200);
+    padding-top: var(--spacing-lg);
+}
+
 
 .blog-preview-item {
     padding: var(--spacing-md);
