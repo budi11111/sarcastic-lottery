@@ -5,27 +5,35 @@
 {% block head %}
 <meta name="description" content="{{ post.meta_description }}">
 <meta name="keywords" content="{{ post.keywords }}">
-<link rel="canonical" href="https://sarcastic-lottery.vercel.app/blog/{{ post.slug }}">
 {% endblock %}
 
 {% block content %}
 <div class="container">
-    <article class="blog-post">
-        <header class="post-header">
-            <h1>{{ post.title }}</h1>
-            <p class="post-meta">{{ post.date }} • {{ post.read_time }} min read</p>
-        </header>
-
-        <div class="post-content">
-            {{ post.content | safe }}
-        </div>
-
-        <footer class="post-footer">
+    <div class="blog-post">
+        <!-- Navigation Links at Top -->
+        <div class="post-footer">
             <div class="back-links">
                 <a href="/blog" class="back-link">← All Blog Posts</a>
                 <a href="/" class="back-link">← Number Generator</a>
             </div>
-        </footer>
-    </article>
+        </div>
+
+        <header class="post-header">
+            <h1>{{ post.title }}</h1>
+            <div class="post-meta">{{ post.date }} • {{ post.read_time }} min read</div>
+        </header>
+
+        <div class="post-content">
+            {{ post.content|safe }}
+        </div>
+
+        <!-- Navigation Links at Bottom (kept for convenience) -->
+        <div class="post-footer">
+            <div class="back-links">
+                <a href="/blog" class="back-link">← All Blog Posts</a>
+                <a href="/" class="back-link">← Number Generator</a>
+            </div>
+        </div>
+    </div>
 </div>
 {% endblock %}

@@ -1211,3 +1211,94 @@ body {
         padding: var(--spacing-lg);
     }
 }
+
+/* Compact Blog Carousel Styles */
+.blog-carousel-section {
+    margin: var(--spacing-md) 0; /* Reduced from var(--spacing-lg) */
+    max-width: 600px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.blog-carousel {
+    overflow: hidden;
+    border-radius: var(--radius-md);
+    background: var(--gray-50);
+    border: 1px solid var(--gray-200);
+    height: 2.5rem; /* Compact height */
+}
+
+.blog-slide {
+    min-width: 100%;
+    padding: var(--spacing-sm) var(--spacing-md); /* Reduced padding */
+    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.blog-post-link {
+    color: var(--gray-800);
+    text-decoration: none;
+    font-weight: var(--font-weight-medium);
+    font-size: 0.85rem; /* Smaller font */
+    line-height: 1.2;
+    display: block;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 100%;
+}
+
+.blog-post-link:hover {
+    color: var(--primary-color);
+}
+
+.blog-carousel-controls {
+    display: flex;
+    justify-content: center;
+    gap: var(--spacing-sm); /* Reduced gap */
+    margin-top: var(--spacing-sm); /* Reduced margin */
+}
+
+.blog-carousel-controls .carousel-btn {
+    width: 28px; /* Smaller buttons */
+    height: 28px;
+    font-size: 1rem;
+}
+
+/* Enhanced Loading Animation - Position within unified generator */
+.unified-generator .loading {
+    margin: var(--spacing-lg) 0;
+    text-align: center;
+    padding: var(--spacing-lg);
+    color: var(--gray-600);
+    background: var(--white);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-md);
+    backdrop-filter: blur(10px);
+}
+
+/* Enhanced Results Section - Position within unified generator */
+.unified-generator .results-section {
+    margin-top: var(--spacing-lg);
+    border-top: 1px solid var(--gray-200);
+    padding-top: var(--spacing-lg);
+}
+
+/* Mobile responsiveness for compact blog carousel */
+@media (max-width: 768px) {
+    .blog-carousel {
+        height: 2.2rem;
+    }
+
+    .blog-post-link {
+        font-size: 0.8rem;
+    }
+
+    .blog-carousel-controls .carousel-btn {
+        width: 24px;
+        height: 24px;
+        font-size: 0.9rem;
+    }
+}
