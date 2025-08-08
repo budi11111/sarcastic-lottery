@@ -214,14 +214,6 @@ body {
 }
 
 
-.blog-preview-item {
-    padding: var(--spacing-md);
-    border-bottom: 1px solid var(--gray-100);
-    display: flex;
-    flex-direction: column;
-    gap: var(--spacing-xs);
-}
-
 .blog-preview-item:last-of-type {
     border-bottom: none;
 }
@@ -244,12 +236,6 @@ body {
     color: var(--gray-500);
 }
 
-.blog-preview-footer {
-    padding: var(--spacing-md);
-    text-align: center;
-    background: var(--gray-50);
-    border-radius: 0 0 var(--radius-md) var(--radius-md);
-}
 
 .blog-preview-footer a {
     color: var(--primary-color);
@@ -802,6 +788,48 @@ body {
     font-weight: var(--font-weight-medium);
 }
 
+/* Blog Carousel Styles */
+.blog-carousel-section {
+    margin: var(--spacing-lg) 0;
+    max-width: 600px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.blog-carousel {
+    overflow: hidden;
+    border-radius: var(--radius-md);
+    background: var(--gray-50);
+    border: 1px solid var(--gray-200);
+}
+
+.blog-slide {
+    min-width: 100%;
+    padding: var(--spacing-md);
+    text-align: center;
+}
+
+.blog-post-link {
+    color: var(--gray-800);
+    text-decoration: none;
+    font-weight: var(--font-weight-medium);
+    font-size: 0.9rem;
+    line-height: 1.4;
+    display: block;
+}
+
+.blog-post-link:hover {
+    color: var(--primary-color);
+}
+
+.blog-carousel-controls {
+    display: flex;
+    justify-content: center;
+    gap: var(--spacing-md);
+    margin-top: var(--spacing-md);
+}
+
+
 /* Success Stories Carousel */
 .success-stories {
     border-top: 1px solid var(--gray-200);
@@ -1101,12 +1129,6 @@ body {
     .review-slide {
         max-width: 100%;
         margin-bottom: var(--spacing-sm);
-    }
-
-    .lottery-wisdom-dropdown {
-        min-width: 250px;
-        left: 0;
-        transform: none;
     }
 
     .lottery-grid {

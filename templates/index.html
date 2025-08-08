@@ -27,17 +27,25 @@
         <div class="navigation">
             <div class="blog-nav-wrapper">
                 <a href="/blog" class="nav-link lottery-wisdom-link">📚 Lottery Wisdom</a>
-                <div class="lottery-wisdom-dropdown hidden">
-                    {% for post in recent_posts[:3] %}
-                    <div class="blog-preview-item">
-                        <a href="/blog/{{ post.slug }}">{{ post.title }}</a>
-                        <span class="preview-date">{{ post.date }}</span>
+            </div>
+        </div>
+
+        <!-- Blog Posts Carousel -->
+        <div class="blog-carousel-section">
+            <div class="blog-carousel" id="blogCarousel">
+                <div class="carousel-track" id="blogTrack">
+                    {% for post in recent_posts[:5] %}
+                    <div class="blog-slide">
+                        <a href="/blog/{{ post.slug }}" class="blog-post-link">
+                            {{ post.title }}
+                        </a>
                     </div>
                     {% endfor %}
-                    <div class="blog-preview-footer">
-                        <a href="/blog">View All Posts →</a>
-                    </div>
                 </div>
+            </div>
+            <div class="blog-carousel-controls">
+                <button class="carousel-btn" id="blogPrev">‹</button>
+                <button class="carousel-btn" id="blogNext">›</button>
             </div>
         </div>
     </header>
@@ -143,32 +151,32 @@
                 <p class="generate-hint" id="generateHint">Press to contribute to infrastructure development</p>
             </div>
         </div>
-    </section>
 
-        <!-- Results -->
-    <section id="results" class="results-section hidden">
-        <div class="sarcastic-comment">
-            <p id="comment"></p>
-        </div>
-        <div id="numbersContainer" class="numbers-container">
-            <!-- Results will be inserted here -->
-        </div>
+        <!-- Results - NOW INSIDE UNIFIED GENERATOR -->
+        <section id="results" class="results-section hidden">
+            <div class="sarcastic-comment">
+                <p id="comment"></p>
+            </div>
+            <div id="numbersContainer" class="numbers-container">
+                <!-- Results will be inserted here -->
+            </div>
 
-        <!-- Success Stories Carousel -->
-        <div class="success-stories">
-            <h4>Recent "Success" Stories:</h4>
-            <div class="stories-carousel-container">
-                <div class="stories-carousel" id="storiesCarousel">
-                    <div class="carousel-track" id="storiesTrack">
-                        <!-- Stories will be inserted by JavaScript -->
+            <!-- Success Stories Carousel -->
+            <div class="success-stories">
+                <h4>Recent "Success" Stories:</h4>
+                <div class="stories-carousel-container">
+                    <div class="stories-carousel" id="storiesCarousel">
+                        <div class="carousel-track" id="storiesTrack">
+                            <!-- Stories will be inserted by JavaScript -->
+                        </div>
+                    </div>
+                    <div class="carousel-controls">
+                        <button class="carousel-btn prev" id="storiesPrev">‹</button>
+                        <button class="carousel-btn next" id="storiesNext">›</button>
                     </div>
                 </div>
-                <div class="carousel-controls">
-                    <button class="carousel-btn prev" id="storiesPrev">‹</button>
-                    <button class="carousel-btn next" id="storiesNext">›</button>
-                </div>
             </div>
-        </div>
+        </section>
     </section>
 
     <!-- Testimonial Reviews Carousel - MOVED BELOW GENERATOR -->
@@ -182,8 +190,6 @@
             <!-- Indicators will be inserted by JavaScript -->
         </div>
     </div>
-
-
 
     <!-- Wisdom Section -->
     <section class="wisdom-section">
@@ -206,33 +212,4 @@
         <small>© 2025 My Jackpot Numbers. Crushing dreams professionally since forever.</small>
     </div>
 </footer>
-
-<script>
-// Lottery Wisdom hover dropdown functionality
-document.addEventListener('DOMContentLoaded', function() {
-    const blogNavWrapper = document.querySelector('.blog-nav-wrapper');
-    const dropdown = document.querySelector('.lottery-wisdom-dropdown');
-
-    if (blogNavWrapper && dropdown) {
-        // Show dropdown on hover
-        blogNavWrapper.addEventListener('mouseenter', function() {
-            dropdown.classList.remove('hidden');
-        });
-
-        // Hide dropdown when mouse leaves
-        blogNavWrapper.addEventListener('mouseleave', function() {
-            dropdown.classList.add('hidden');
-        });
-
-        // Keep dropdown visible when hovering over it
-        dropdown.addEventListener('mouseenter', function() {
-            dropdown.classList.remove('hidden');
-        });
-
-        dropdown.addEventListener('mouseleave', function() {
-            dropdown.classList.add('hidden');
-        });
-    }
-});
-</script>
 {% endblock %}

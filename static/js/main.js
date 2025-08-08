@@ -4,9 +4,11 @@ class MyJackpotNumbers {
         this.isGenerating = false;
         this.reviewsCarousel = null;
         this.storiesCarousel = null;
+        this.blogCarousel = null;
         this.initializeEventListeners();
         this.initializeDynamicContent();
         this.initializeCarousels();
+        this.initializeBlogCarousel();
     }
 
     initializeEventListeners() {
@@ -157,6 +159,38 @@ class MyJackpotNumbers {
     initializeCarousels() {
         this.initializeReviewsCarousel();
         this.initializeStoriesCarousel();
+    }
+
+    initializeBlogCarousel() {
+        const blogTrack = document.getElementById('blogTrack');
+        const blogPrev = document.getElementById('blogPrev');
+        const blogNext = document.getElementById('blogNext');
+
+        if (blogTrack && blogPrev && blogNext) {
+            let currentSlide = 0;
+            const slides = blogTrack.children.length;
+
+            function updateCarousel() {
+                const offset = -currentSlide * 100;
+                blogTrack.style.transform = `translateX(${offset}%)`;
+            }
+
+            blogNext.addEventListener('click', () => {
+                currentSlide = (currentSlide + 1) % slides;
+                updateCarousel();
+            });
+
+            blogPrev.addEventListener('click', () => {
+                currentSlide = (currentSlide - 1 + slides) % slides;
+                updateCarousel();
+            });
+
+            // Auto-rotate every 4 seconds
+            setInterval(() => {
+                currentSlide = (currentSlide + 1) % slides;
+                updateCarousel();
+            }, 4000);
+        }
     }
 
     initializeReviewsCarousel() {
@@ -362,7 +396,11 @@ class MyJackpotNumbers {
 
     showLoading() {
         document.getElementById('loading').classList.remove('hidden');
-        document.getElementById('results').classList.add('hidden');
+        // FIXED: Target results section inside unified generator
+        const resultsSection = document.querySelector('.unified-generator #results');
+        if (resultsSection) {
+            resultsSection.classList.add('hidden');
+        }
         document.getElementById('generateBtn').disabled = true;
     }
 
@@ -372,9 +410,10 @@ class MyJackpotNumbers {
     }
 
     displayResults(data) {
-        const resultsSection = document.getElementById('results');
-        const commentElement = document.getElementById('comment');
-        const numbersContainer = document.getElementById('numbersContainer');
+        // FIXED: Target results section inside unified generator
+        const resultsSection = document.querySelector('.unified-generator #results');
+        const commentElement = resultsSection.querySelector('#comment');
+        const numbersContainer = resultsSection.querySelector('#numbersContainer');
 
         // Display sarcastic comment
         commentElement.textContent = data.comment;
@@ -388,7 +427,7 @@ class MyJackpotNumbers {
             numbersContainer.appendChild(numberSet);
         });
 
-        // Show results with smooth animation
+        // Show results with smooth animation - FIXED: scroll to correct container
         resultsSection.classList.remove('hidden');
         resultsSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
     }
@@ -452,9 +491,10 @@ class MyJackpotNumbers {
     }
 
     showError(message) {
-        const resultsSection = document.getElementById('results');
-        const commentElement = document.getElementById('comment');
-        const numbersContainer = document.getElementById('numbersContainer');
+        // FIXED: Target results section inside unified generator
+        const resultsSection = document.querySelector('.unified-generator #results');
+        const commentElement = resultsSection.querySelector('#comment');
+        const numbersContainer = resultsSection.querySelector('#numbersContainer');
 
         commentElement.textContent = message || "Something went wrong generating your numbers. Please try again!";
         numbersContainer.innerHTML = '<p style="text-align: center; color: var(--danger-color);">Unable to generate numbers. Please check your settings and try again.</p>';
