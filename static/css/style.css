@@ -1237,6 +1237,66 @@ body {
     justify-content: center;
 }
 
+/* Breadcrumb Navigation */
+.breadcrumb-nav {
+    margin-bottom: var(--spacing-lg);
+}
+
+.breadcrumb {
+    display: flex;
+    align-items: center;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    font-size: 0.9rem;
+    color: var(--gray-500);
+}
+
+.breadcrumb-item {
+    display: flex;
+    align-items: center;
+}
+
+.breadcrumb-item:not(:last-child)::after {
+    content: '›';
+    margin: 0 var(--spacing-sm);
+    color: var(--gray-400);
+}
+
+.breadcrumb-item a {
+    color: var(--primary-color);
+    text-decoration: none;
+    transition: color 0.2s ease;
+}
+
+.breadcrumb-item a:hover {
+    color: var(--primary-hover);
+    text-decoration: underline;
+}
+
+.breadcrumb-item.active {
+    color: var(--gray-600);
+    font-weight: var(--font-weight-medium);
+}
+
+/* Enhanced Error Page Styles (already included in 404.html above) */
+
+/* Performance Optimizations */
+.loading-spinner {
+    will-change: transform;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .loading-spinner {
+        animation: none;
+    }
+
+    .carousel-track {
+        transition: none;
+    }
+}
+
+
 .blog-post-link {
     color: var(--gray-800);
     text-decoration: none;

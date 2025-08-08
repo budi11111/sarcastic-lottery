@@ -216,6 +216,29 @@ def blog_post(slug):
         return "Post not found", 404
     return render_template('blog_post.html', post=post)
 
+# Add this after your existing routes, before if __name__ == '__main__':
+
+@app.route('/browserconfig.xml')
+def browserconfig():
+    return '''<?xml version="1.0" encoding="utf-8"?>
+<browserconfig>
+    <msapplication>
+        <tile>
+            <square150x150logo src="/static/android-chrome-192x192.png"/>
+            <TileColor>#007AFF</TileColor>
+        </tile>
+    </msapplication>
+</browserconfig>''', 200, {'Content-Type': 'application/xml'}
+
+@app.errorhandler(404)
+def page_not_found(error):
+    return render_template('404.html'), 404
+
+@app.errorhandler(500)
+def internal_server_error(error):
+    return render_template('404.html'), 500
+
+
 
 if __name__ == '__main__':
     app.run(debug=True)

@@ -3,27 +3,88 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{% block title %}My Jackpot Numbers - Professional Lottery Number Generator{% endblock %}</title>
-    {% block head %}{% endblock %}
+
+    <!-- Basic Meta Tags -->
+    <title>{% block title %}My Jackpot Numbers - Free Lottery Number Generator{% endblock %}</title>
+    <meta name="description" content="{% block meta_description %}Generate lottery numbers with personality! Free Powerball, Mega Millions, EuroMillions & Eurojackpot number generator with sarcastic humor.{% endblock %}">
+    <meta name="keywords" content="{% block keywords %}lottery number generator, powerball numbers, mega millions picker, euromillions generator{% endblock %}">
+    <meta name="author" content="My Jackpot Numbers">
+    <meta name="robots" content="index, follow">
+
+    <!-- Canonical URL -->
+    <link rel="canonical" href="https://sarcastic-lottery.vercel.app{% block canonical_url %}/{% endblock %}">
+
+    <!-- Favicon and Icons -->
+    <link rel="apple-touch-icon" sizes="180x180" href="{{ url_for('static', filename='apple-touch-icon.png') }}">
+    <link rel="icon" type="image/png" sizes="32x32" href="{{ url_for('static', filename='favicon-32x32.png') }}">
+    <link rel="icon" type="image/png" sizes="16x16" href="{{ url_for('static', filename='favicon-16x16.png') }}">
+    <link rel="manifest" href="{{ url_for('static', filename='site.webmanifest') }}">
+    <link rel="shortcut icon" href="{{ url_for('static', filename='favicon.ico') }}">
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="{% block og_type %}website{% endblock %}">
+    <meta property="og:url" content="https://sarcastic-lottery.vercel.app{% block og_url %}/{% endblock %}">
+    <meta property="og:title" content="{% block og_title %}{{ self.title() }}{% endblock %}">
+    <meta property="og:description" content="{% block og_description %}{{ self.meta_description() }}{% endblock %}">
+    <meta property="og:image" content="https://sarcastic-lottery.vercel.app{{ url_for('static', filename='android-chrome-512x512.png') }}">
+    <meta property="og:image:width" content="512">
+    <meta property="og:image:height" content="512">
+    <meta property="og:locale" content="en_US">
+    <meta property="og:site_name" content="My Jackpot Numbers">
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="https://sarcastic-lottery.vercel.app{% block twitter_url %}/{% endblock %}">
+    <meta property="twitter:title" content="{% block twitter_title %}{{ self.title() }}{% endblock %}">
+    <meta property="twitter:description" content="{% block twitter_description %}{{ self.meta_description() }}{% endblock %}">
+    <meta property="twitter:image" content="https://sarcastic-lottery.vercel.app{{ url_for('static', filename='android-chrome-512x512.png') }}">
+
+    <!-- Additional Meta Tags -->
+    <meta name="theme-color" content="#007AFF">
+    <meta name="msapplication-TileColor" content="#007AFF">
+    <meta name="msapplication-config" content="{{ url_for('static', filename='browserconfig.xml') }}">
+
+    <!-- Preconnect for Performance -->
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="dns-prefetch" href="//fonts.googleapis.com">
+
+    <!-- Stylesheets -->
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
-    <link href="https://fonts.googleapis.com/css2?family=SF+Pro+Display:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 
-    <!-- Google Analytics -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-WZYX0Y0KF4"></script>
-    <script>
-      window.dataLayer = window.dataLayer || [];
-      function gtag(){dataLayer.push(arguments);}
-      gtag('js', new Date());
-      gtag('config', 'G-WZYX0Y0KF4');
+    <!-- Organization Schema -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "Organization",
+        "name": "My Jackpot Numbers",
+        "url": "https://sarcastic-lottery.vercel.app",
+        "logo": "https://sarcastic-lottery.vercel.app{{ url_for('static', filename='android-chrome-512x512.png') }}",
+        "description": "Professional lottery number generator with personality. Generate Powerball, Mega Millions, EuroMillions, and custom lottery numbers with sarcastic humor.",
+        "sameAs": [],
+        "contactPoint": {
+            "@type": "ContactPoint",
+            "contactType": "customer service",
+            "areaServed": "Worldwide",
+            "availableLanguage": "English"
+        },
+        "potentialAction": {
+            "@type": "Action",
+            "name": "Generate Lottery Numbers",
+            "target": "https://sarcastic-lottery.vercel.app"
+        }
+    }
     </script>
-</head>
 
+    <!-- Google Analytics (if you have it) -->
+    <!-- <script async src="https://www.googletagmanager.com/gtag/js?id=GA_MEASUREMENT_ID"></script> -->
+
+    {% block head %}{% endblock %}
+</head>
 <body>
-    <div id="app">
-        {% block content %}{% endblock %}
-    </div>
+    {% block content %}{% endblock %}
 
     <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+    {% block scripts %}{% endblock %}
 </body>
 </html>
