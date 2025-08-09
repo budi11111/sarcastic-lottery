@@ -217,15 +217,7 @@
                     <meta itemprop="url" content="https://sarcastic-lottery.vercel.app">
                 </div>
 
-                <!-- Tags if available -->
-                {% if post.keywords %}
-                <div class="article-tags">
-                    <strong>Topics:</strong>
-                    {% for keyword in post.keywords.split(',') %}
-                    <span class="tag" itemprop="keywords">{{ keyword.strip() }}</span>
-                    {% endfor %}
-                </div>
-                {% endif %}
+
             </footer>
         </article>
 
