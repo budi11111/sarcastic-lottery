@@ -1,23 +1,75 @@
 {
-    "name": "My Jackpot Numbers - Lottery Generator",
+    "name": "My Jackpot Numbers - Professional Lottery Number Generator",
     "short_name": "Jackpot Numbers",
-    "description": "Generate lottery numbers with personality. Free Powerball, Mega Millions, EuroMillions & custom lottery number generator.",
+    "description": "Generate lottery numbers with personality for Powerball, Mega Millions, EuroMillions & Eurojackpot. Educational content with mathematical reality checks.",
+    "start_url": "/",
+    "display": "standalone",
+    "background_color": "#F2F2F7",
+    "theme_color": "#007AFF",
+    "orientation": "portrait",
+    "scope": "/",
+    "lang": "en-US",
+    "dir": "ltr",
+    "categories": ["entertainment", "education", "utilities"],
+    "screenshots": [
+        {
+            "src": "/static/android-chrome-512x512.png",
+            "sizes": "512x512",
+            "type": "image/png",
+            "form_factor": "wide"
+        }
+    ],
     "icons": [
         {
             "src": "/static/android-chrome-192x192.png",
             "sizes": "192x192",
-            "type": "image/png"
+            "type": "image/png",
+            "purpose": "any maskable"
         },
         {
             "src": "/static/android-chrome-512x512.png",
             "sizes": "512x512",
-            "type": "image/png"
+            "type": "image/png",
+            "purpose": "any maskable"
         }
     ],
-    "theme_color": "#007AFF",
-    "background_color": "#F2F2F7",
-    "display": "standalone",
-    "start_url": "/",
-    "scope": "/",
-    "orientation": "portrait"
+    "shortcuts": [
+        {
+            "name": "Generate Powerball",
+            "short_name": "Powerball",
+            "description": "Generate Powerball lottery numbers",
+            "url": "/?lottery=powerball",
+            "icons": [
+                {
+                    "src": "/static/android-chrome-192x192.png",
+                    "sizes": "192x192"
+                }
+            ]
+        },
+        {
+            "name": "Generate Mega Millions",
+            "short_name": "Mega Millions",
+            "description": "Generate Mega Millions lottery numbers",
+            "url": "/?lottery=megamillions",
+            "icons": [
+                {
+                    "src": "/static/android-chrome-192x192.png",
+                    "sizes": "192x192"
+                }
+            ]
+        },
+        {
+            "name": "Lottery Education",
+            "short_name": "Blog",
+            "description": "Read lottery education content",
+            "url": "/blog",
+            "icons": [
+                {
+                    "src": "/static/android-chrome-192x192.png",
+                    "sizes": "192x192"
+                }
+            ]
+        }
+    ],
+    "prefer_related_applications": false
 }

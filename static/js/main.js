@@ -1,3 +1,51 @@
+// Performance optimizations
+if ('serviceWorker' in navigator) {
+    window.addEventListener('load', () => {
+        navigator.serviceWorker.register('/sw.js').catch(err => {
+            console.log('SW registration failed');
+        });
+    });
+}
+
+// Optimize carousel animations
+const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
+
+// Intersection Observer for lazy loading
+const observerOptions = {
+    root: null,
+    rootMargin: '50px',
+    threshold: 0.1
+};
+
+const lazyObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+        if (entry.isIntersecting) {
+            entry.target.classList.add('fade-in');
+            lazyObserver.unobserve(entry.target);
+        }
+    });
+}, observerOptions);
+
+// Performance monitoring
+if ('performance' in window && 'PerformanceObserver' in window) {
+    try {
+        const perfObserver = new PerformanceObserver((entryList) => {
+            const entries = entryList.getEntries();
+            entries.forEach(entry => {
+                if (entry.entryType === 'largest-contentful-paint') {
+                    console.log('LCP:', entry.startTime);
+                }
+            });
+        });
+        perfObserver.observe({ entryTypes: ['largest-contentful-paint'] });
+    } catch (e) {
+        // Observer not supported
+    }
+}
+
+// Rest of existing code continues unchanged...
+
+
 class MyJackpotNumbers {
     constructor() {
         this.currentLottery = 'powerball';

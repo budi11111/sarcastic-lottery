@@ -7,6 +7,76 @@
 <meta name="keywords" content="lottery number generator, powerball numbers, mega millions picker, euromillions generator, lottery quick pick, random lottery numbers">
 <meta name="robots" content="index, follow">
 <link rel="canonical" href="https://sarcastic-lottery.vercel.app/">
+
+<!-- Homepage Specific Schemas -->
+<script type="application/ld+json">
+{
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "My Jackpot Numbers Generator",
+    "url": "https://sarcastic-lottery.vercel.app",
+    "description": "Free online lottery number generator for Powerball, Mega Millions, EuroMillions, and Eurojackpot with custom lottery support.",
+    "applicationCategory": "Entertainment",
+    "operatingSystem": "All",
+    "permissions": "browser",
+    "offers": {
+        "@type": "Offer",
+        "price": "0",
+        "priceCurrency": "USD"
+    },
+    "featureList": [
+        "Powerball Number Generation",
+        "Mega Millions Number Generation",
+        "EuroMillions Number Generation",
+        "Eurojackpot Number Generation",
+        "Custom Lottery Configuration",
+        "Multiple Combination Generation",
+        "Educational Lottery Content"
+    ]
+}
+</script>
+
+<script type="application/ld+json">
+{
+    "@context": "https://schema.org",
+    "@type": "ItemList",
+    "name": "Lottery Number Generators",
+    "description": "Available lottery number generation services",
+    "numberOfItems": "5",
+    "itemListElement": [
+        {
+            "@type": "ListItem",
+            "position": 1,
+            "name": "Powerball Generator",
+            "description": "Generate Powerball lottery numbers (5 from 69 + 1 from 26)"
+        },
+        {
+            "@type": "ListItem",
+            "position": 2,
+            "name": "Mega Millions Generator",
+            "description": "Generate Mega Millions lottery numbers (5 from 70 + 1 from 24)"
+        },
+        {
+            "@type": "ListItem",
+            "position": 3,
+            "name": "EuroMillions Generator",
+            "description": "Generate EuroMillions lottery numbers (5 from 50 + 2 from 12)"
+        },
+        {
+            "@type": "ListItem",
+            "position": 4,
+            "name": "Eurojackpot Generator",
+            "description": "Generate Eurojackpot lottery numbers (5 from 50 + 2 from 12)"
+        },
+        {
+            "@type": "ListItem",
+            "position": 5,
+            "name": "Custom Lottery Generator",
+            "description": "Create and generate numbers for custom lottery configurations"
+        }
+    ]
+}
+</script>
 {% endblock %}
 
 {% block content %}
@@ -50,7 +120,7 @@
         </div>
     </header>
 
-    <!-- UNIFIED GENERATOR SECTION - MOVED ABOVE CAROUSEL -->
+    <!-- UNIFIED GENERATOR SECTION -->
     <section class="unified-generator priority-section">
         <h2 id="selectorTitle">Choose Your Wallet-Emptying Adventure</h2>
         <p class="section-subtitle" id="selectorSubtitle">Spoiler alert: the house always wins</p>
@@ -93,7 +163,7 @@
             </button>
         </div>
 
-        <!-- Custom Lottery Configuration (Hidden by default) -->
+        <!-- Custom Lottery Configuration -->
         <div id="customConfig" class="custom-config hidden">
             <div class="custom-form">
                 <h3>Create Your Custom Lottery</h3>
@@ -125,9 +195,8 @@
             </div>
         </div>
 
-        <!-- INTEGRATED: Combinations & Generate Section -->
+        <!-- Generator Controls -->
         <div class="generator-controls">
-            <!-- Options -->
             <div class="option-card">
                 <label for="combinations">Combinations to Generate</label>
                 <select id="combinations">
@@ -143,7 +212,6 @@
             </div>
             <p class="option-hint" id="optionHint">Remember: Each additional combination is another way to not win!</p>
 
-            <!-- Generate Button -->
             <div class="generate-section">
                 <button id="generateBtn" class="generate-btn">
                     <span>Generate My Disappointment</span>
@@ -152,13 +220,13 @@
             </div>
         </div>
 
-        <!-- MOVED: Loading Animation - NOW RIGHT BELOW GENERATE BUTTON -->
+        <!-- Loading Animation -->
         <div id="loading" class="loading hidden">
             <div class="loading-spinner"></div>
             <p id="loadingText">Calculating your inevitable disappointment...</p>
         </div>
 
-        <!-- MOVED: Results - NOW RIGHT BELOW LOADING -->
+        <!-- Results -->
         <section id="results" class="results-section hidden">
             <div class="sarcastic-comment">
                 <p id="comment"></p>
@@ -185,7 +253,7 @@
         </section>
     </section>
 
-    <!-- Testimonial Reviews Carousel - MOVED BELOW GENERATOR -->
+    <!-- Testimonial Reviews Carousel -->
     <div class="reviews-carousel-container">
         <div class="reviews-carousel" id="reviewsCarousel">
             <div class="carousel-track" id="reviewsTrack">

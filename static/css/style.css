@@ -75,6 +75,78 @@ body {
     padding: var(--spacing-lg);
 }
 
+/* Performance Optimizations */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Critical rendering path optimization */
+.above-fold {
+    will-change: transform;
+}
+
+/* Reduce layout thrash */
+.carousel-track {
+    will-change: transform;
+    backface-visibility: hidden;
+    perspective: 1000px;
+}
+
+.loading-spinner {
+    will-change: transform;
+    backface-visibility: hidden;
+}
+
+/* Optimize font loading */
+@font-face {
+    font-family: 'SF Pro Display';
+    font-display: swap;
+    src: local('SF Pro Display'), local('SFProDisplay-Regular');
+}
+
+/* Reduce CLS */
+.lottery-btn {
+    min-height: 80px;
+}
+
+.blog-carousel {
+    min-height: 2.5rem;
+}
+
+.reviews-carousel-container {
+    min-height: 120px;
+}
+
+/* Optimize for mobile */
+@media (max-width: 768px) {
+    .container {
+        padding: 16px;
+        contain: layout style paint;
+    }
+}
+
+/* Prefers-reduced-motion */
+@media (prefers-reduced-motion: reduce) {
+    .loading-spinner {
+        animation: none;
+    }
+
+    .carousel-track {
+        transition: none;
+    }
+
+    * {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+    }
+}
+
+/* Rest of existing CSS continues unchanged... */
+
+
 /* Enhanced Header Styles */
 .header {
     text-align: center;

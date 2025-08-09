@@ -1,39 +1,156 @@
 {% extends "base.html" %}
 
-{% block title %}Lottery Wisdom & Sarcasm - My Jackpot Numbers Blog{% endblock %}
+{% block title %}Lottery Education Blog - Mathematical Reality & Sarcastic Wisdom{% endblock %}
+{% block meta_description %}Educational lottery content with mathematical analysis, odds explanations, and reality checks. Learn why lottery systems work the way they do with humor and honesty.{% endblock %}
+{% block keywords %}lottery blog, lottery education, lottery odds, lottery mathematics, probability, powerball odds, mega millions odds{% endblock %}
+{% block canonical_url %}/blog{% endblock %}
 
 {% block head %}
-<meta name="description" content="Educational lottery content with brutal honesty about odds, mathematics, and why you probably won't win. Sarcastic wisdom for the statistically challenged.">
-<meta name="keywords" content="lottery blog, lottery education, lottery odds, lottery mathematics, lottery reality check">
+<!-- Blog Collection Schema -->
+<script type="application/ld+json">
+{
+    "@context": "https://schema.org",
+    "@type": "Blog",
+    "@id": "https://sarcastic-lottery.vercel.app/blog#blog",
+    "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://sarcastic-lottery.vercel.app/blog"
+    },
+    "name": "My Jackpot Numbers Blog",
+    "description": "Educational lottery content featuring mathematical analysis, odds explanations, and honest commentary about lottery systems worldwide.",
+    "publisher": {
+        "@type": "Organization",
+        "name": "My Jackpot Numbers",
+        "logo": {
+            "@type": "ImageObject",
+            "url": "https://sarcastic-lottery.vercel.app{{ url_for('static', filename='android-chrome-512x512.png') }}"
+        }
+    },
+    "inLanguage": "en-US",
+    "copyrightYear": "2025",
+    "genre": ["Education", "Mathematics", "Finance"],
+    "keywords": "lottery, probability, mathematics, odds, financial education"
+}
+</script>
+
+<!-- Conditional Blog Posts Schema -->
+{% if posts %}
+<script type="application/ld+json">
+{
+    "@context": "https://schema.org",
+    "@type": "ItemList",
+    "name": "Blog Posts",
+    "numberOfItems": {{ posts|length }},
+    "itemListElement": [
+        {% for post in posts[:10] %}
+        {
+            "@type": "BlogPosting",
+            "@id": "https://sarcastic-lottery.vercel.app/blog/{{ post.slug | urlencode }}#article",
+            "headline": {{ post.title | tojson }},
+            "datePublished": "{{ post.publish_date }}T00:00:00+00:00",
+            "author": {
+                "@type": "Person",
+                "name": "My Jackpot Numbers Editorial Team"
+            },
+            "publisher": {
+                "@type": "Organization",
+                "name": "My Jackpot Numbers"
+            }
+        }{% if not loop.last %},{% endif %}
+        {% endfor %}
+    ]
+}
+</script>
+{% endif %}
+
+<!-- Breadcrumb Schema -->
+<script type="application/ld+json">
+{
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+        {
+            "@type": "ListItem",
+            "position": 1,
+            "name": "Home",
+            "item": {
+                "@type": "WebPage",
+                "@id": "https://sarcastic-lottery.vercel.app"
+            }
+        },
+        {
+            "@type": "ListItem",
+            "position": 2,
+            "name": "Lottery Education Blog",
+            "item": {
+                "@type": "WebPage",
+                "@id": "https://sarcastic-lottery.vercel.app/blog"
+            }
+        }
+    ]
+}
+</script>
 {% endblock %}
 
 {% block content %}
 <div class="container">
     <div class="blog-post">
+        <!-- Breadcrumb Navigation -->
+        <nav aria-label="breadcrumb" class="breadcrumb-nav">
+            <ol class="breadcrumb" itemscope itemtype="https://schema.org/BreadcrumbList">
+                <li class="breadcrumb-item" itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+                    <a href="/" itemprop="item">
+                        <span itemprop="name">Home</span>
+                    </a>
+                    <meta itemprop="position" content="1">
+                </li>
+                <li class="breadcrumb-item active" aria-current="page" itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+                    <span itemprop="name">Lottery Education</span>
+                    <meta itemprop="position" content="2">
+                </li>
+            </ol>
+        </nav>
+
         <header class="post-header">
-            <h1>Lottery Wisdom & Sarcasm</h1>
-            <p class="post-meta">Educational content with a side of brutal honesty</p>
+            <h1>Lottery Wisdom & Mathematical Reality</h1>
+            <p class="post-meta">Educational content with a side of brutal honesty about probability</p>
         </header>
 
         <!-- Navigation Links at Top -->
         <div class="back-to-generator">
-            <a href="/" class="back-link">← Back to Number Generator</a>
+            <a href="/" class="back-link" rel="home">← Back to Number Generator</a>
         </div>
 
-        <div class="blog-posts">
+        <main class="blog-posts">
             {% for post in posts %}
-            <article class="blog-preview">
-                <h2><a href="/blog/{{ post.slug }}">{{ post.title }}</a></h2>
-                <div class="post-meta">{{ post.date }} • {{ post.read_time }} min read</div>
-                <p class="post-excerpt">{{ post.excerpt }}</p>
-                <a href="/blog/{{ post.slug }}" class="read-more">Read full post →</a>
+            <article class="blog-preview" itemscope itemtype="https://schema.org/BlogPosting">
+                <header>
+                    <h2 itemprop="headline">
+                        <a href="/blog/{{ post.slug }}" itemprop="url">{{ post.title }}</a>
+                    </h2>
+                    <div class="post-meta">
+                        <time datetime="{{ post.publish_date }}" itemprop="datePublished">{{ post.date }}</time>
+                        <span>•</span>
+                        <span>{{ post.read_time }} min read</span>
+                        <meta itemprop="author" content="My Jackpot Numbers Editorial Team">
+                        <meta itemprop="publisher" content="My Jackpot Numbers">
+                    </div>
+                </header>
+
+                <div itemprop="description" class="post-excerpt">{{ post.excerpt }}</div>
+
+                <footer>
+                    <a href="/blog/{{ post.slug }}" class="read-more" itemprop="url">Read full post →</a>
+                </footer>
+
+                <meta itemprop="mainEntityOfPage" content="https://sarcastic-lottery.vercel.app/blog/{{ post.slug }}">
             </article>
             {% endfor %}
-        </div>
+        </main>
 
-        <!-- Navigation Links at Bottom (kept for convenience) -->
+        <!-- Navigation Links at Bottom -->
         <div class="back-to-generator">
-            <a href="/" class="back-link">← Back to Number Generator</a>
+            <a href="/" class="back-link" rel="home">← Back to Number Generator</a>
         </div>
     </div>
 </div>

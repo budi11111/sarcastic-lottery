@@ -39,52 +39,155 @@
     <meta property="twitter:description" content="{% block twitter_description %}{{ self.meta_description() }}{% endblock %}">
     <meta property="twitter:image" content="https://sarcastic-lottery.vercel.app{{ url_for('static', filename='android-chrome-512x512.png') }}">
 
-    <!-- Additional Meta Tags -->
+    <!-- Additional SEO Meta Tags -->
     <meta name="theme-color" content="#007AFF">
     <meta name="msapplication-TileColor" content="#007AFF">
     <meta name="msapplication-config" content="{{ url_for('static', filename='browserconfig.xml') }}">
+    <meta name="generator" content="My Jackpot Numbers v1.0">
+    <meta name="rating" content="general">
+    <meta name="distribution" content="global">
+    <meta name="revisit-after" content="1 days">
 
     <!-- Preconnect for Performance -->
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link rel="dns-prefetch" href="//fonts.googleapis.com">
+    <link rel="dns-prefetch" href="//cdnjs.cloudflare.com">
+
+    <!-- Critical CSS Inline -->
+    <style>
+        body{font-family:'SF Pro Display',-apple-system,BlinkMacSystemFont,'Inter',sans-serif;background:#F2F2F7;min-height:100vh;color:#2C2C2E;line-height:1.6;-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale}
+        .container{max-width:800px;margin:0 auto;padding:24px}
+        .hidden{display:none!important}
+        .loading-spinner{width:40px;height:40px;border:3px solid #E5E5EA;border-top:3px solid #007AFF;border-radius:50%;animation:spin 1s linear infinite;margin:0 auto 24px}
+        @keyframes spin{0%{transform:rotate(0deg)}100%{transform:rotate(360deg)}}
+    </style>
 
     <!-- Stylesheets -->
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 
-    <!-- Organization Schema -->
+    <!-- Enhanced Organization Schema -->
     <script type="application/ld+json">
     {
         "@context": "https://schema.org",
         "@type": "Organization",
         "name": "My Jackpot Numbers",
+        "legalName": "My Jackpot Numbers",
         "url": "https://sarcastic-lottery.vercel.app",
-        "logo": "https://sarcastic-lottery.vercel.app{{ url_for('static', filename='android-chrome-512x512.png') }}",
-        "description": "Professional lottery number generator with personality. Generate Powerball, Mega Millions, EuroMillions, and custom lottery numbers with sarcastic humor.",
-        "sameAs": [],
+        "logo": {
+            "@type": "ImageObject",
+            "url": "https://sarcastic-lottery.vercel.app{{ url_for('static', filename='android-chrome-512x512.png') }}",
+            "width": "512",
+            "height": "512"
+        },
+        "description": "Professional lottery number generator with personality. Generate Powerball, Mega Millions, EuroMillions, and custom lottery numbers with sarcastic humor and mathematical reality checks.",
+        "foundingDate": "2025",
+        "founders": [
+            {
+                "@type": "Person",
+                "name": "My Jackpot Numbers Team"
+            }
+        ],
+        "address": {
+            "@type": "PostalAddress",
+            "addressCountry": "Global"
+        },
         "contactPoint": {
             "@type": "ContactPoint",
             "contactType": "customer service",
             "areaServed": "Worldwide",
-            "availableLanguage": "English"
+            "availableLanguage": ["English"]
         },
-        "potentialAction": {
-            "@type": "Action",
-            "name": "Generate Lottery Numbers",
-            "target": "https://sarcastic-lottery.vercel.app"
+        "sameAs": [],
+        "potentialAction": [
+            {
+                "@type": "Action",
+                "name": "Generate Lottery Numbers",
+                "target": "https://sarcastic-lottery.vercel.app"
+            },
+            {
+                "@type": "SearchAction",
+                "target": {
+                    "@type": "EntryPoint",
+                    "urlTemplate": "https://sarcastic-lottery.vercel.app/blog?search={search_term_string}"
+                },
+                "query-input": "required name=search_term_string"
+            }
+        ],
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "https://sarcastic-lottery.vercel.app"
         }
     }
     </script>
 
-    <!-- Google Analytics (if you have it) -->
-    <!-- <script async src="https://www.googletagmanager.com/gtag/js?id=GA_MEASUREMENT_ID"></script> -->
+    <!-- Website Schema -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "WebSite",
+        "name": "My Jackpot Numbers",
+        "alternateName": "Jackpot Numbers Generator",
+        "url": "https://sarcastic-lottery.vercel.app",
+        "description": "Free lottery number generator for Powerball, Mega Millions, EuroMillions, and custom lotteries with mathematical reality checks and sarcastic humor.",
+        "inLanguage": "en-US",
+        "copyrightYear": "2025",
+        "copyrightHolder": {
+            "@type": "Organization",
+            "name": "My Jackpot Numbers"
+        },
+        "publisher": {
+            "@type": "Organization",
+            "name": "My Jackpot Numbers",
+            "logo": {
+                "@type": "ImageObject",
+                "url": "https://sarcastic-lottery.vercel.app{{ url_for('static', filename='android-chrome-512x512.png') }}"
+            }
+        },
+        "potentialAction": {
+            "@type": "SearchAction",
+            "target": {
+                "@type": "EntryPoint",
+                "urlTemplate": "https://sarcastic-lottery.vercel.app/blog?search={search_term_string}"
+            },
+            "query-input": "required name=search_term_string"
+        }
+    }
+    </script>
+
+    <!-- Service Schema -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "Service",
+        "name": "Lottery Number Generation Service",
+        "provider": {
+            "@type": "Organization",
+            "name": "My Jackpot Numbers"
+        },
+        "serviceType": "Lottery Number Generator",
+        "description": "Free lottery number generation service for major international lotteries including Powerball, Mega Millions, EuroMillions, and Eurojackpot with custom lottery support.",
+        "areaServed": "Worldwide",
+        "availableChannel": {
+            "@type": "ServiceChannel",
+            "@id": "https://sarcastic-lottery.vercel.app"
+        },
+        "category": "Entertainment",
+        "offers": {
+            "@type": "Offer",
+            "price": "0",
+            "priceCurrency": "USD",
+            "availability": "https://schema.org/InStock"
+        }
+    }
+    </script>
 
     {% block head %}{% endblock %}
 </head>
 <body>
     {% block content %}{% endblock %}
 
-    <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/main.js') }}" defer></script>
     {% block scripts %}{% endblock %}
 </body>
 </html>

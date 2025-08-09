@@ -16,24 +16,34 @@
 {% block twitter_url %}/blog/{{ post.slug }}{% endblock %}
 
 {% block head %}
-<!-- Article Schema -->
+<!-- Enhanced Article Schema -->
 <script type="application/ld+json">
 {
     "@context": "https://schema.org",
     "@type": "Article",
+    "@id": "https://sarcastic-lottery.vercel.app/blog/{{ post.slug }}#article",
     "headline": "{{ post.title }}",
     "description": "{{ post.meta_description }}",
-    "image": "https://sarcastic-lottery.vercel.app{{ url_for('static', filename='android-chrome-512x512.png') }}",
+    "image": {
+        "@type": "ImageObject",
+        "url": "https://sarcastic-lottery.vercel.app{{ url_for('static', filename='android-chrome-512x512.png') }}",
+        "width": "512",
+        "height": "512"
+    },
     "author": {
         "@type": "Person",
-        "name": "My Jackpot Numbers"
+        "name": "My Jackpot Numbers Editorial Team",
+        "url": "https://sarcastic-lottery.vercel.app",
+        "sameAs": []
     },
     "publisher": {
         "@type": "Organization",
         "name": "My Jackpot Numbers",
         "logo": {
             "@type": "ImageObject",
-            "url": "https://sarcastic-lottery.vercel.app{{ url_for('static', filename='android-chrome-512x512.png') }}"
+            "url": "https://sarcastic-lottery.vercel.app{{ url_for('static', filename='android-chrome-512x512.png') }}",
+            "width": "512",
+            "height": "512"
         }
     },
     "datePublished": "{{ post.publish_date }}T00:00:00+00:00",
@@ -45,11 +55,36 @@
     "articleSection": "Lottery Education",
     "keywords": "{{ post.keywords }}",
     "wordCount": "{{ (post.content | string | length / 5) | round | int }}",
-    "inLanguage": "en-US"
+    "inLanguage": "en-US",
+    "genre": "Educational",
+    "about": [
+        {
+            "@type": "Thing",
+            "name": "Lottery",
+            "sameAs": "https://en.wikipedia.org/wiki/Lottery"
+        },
+        {
+            "@type": "Thing",
+            "name": "Probability",
+            "sameAs": "https://en.wikipedia.org/wiki/Probability"
+        }
+    ],
+    "mentions": [
+        {
+            "@type": "Thing",
+            "name": "Powerball",
+            "sameAs": "https://www.powerball.com"
+        },
+        {
+            "@type": "Thing",
+            "name": "Mega Millions",
+            "sameAs": "https://www.megamillions.com"
+        }
+    ]
 }
 </script>
 
-<!-- Breadcrumb Schema -->
+<!-- Enhanced Breadcrumb Schema -->
 <script type="application/ld+json">
 {
     "@context": "https://schema.org",
@@ -59,61 +94,146 @@
             "@type": "ListItem",
             "position": 1,
             "name": "Home",
-            "item": "https://sarcastic-lottery.vercel.app"
+            "item": {
+                "@type": "WebPage",
+                "@id": "https://sarcastic-lottery.vercel.app",
+                "name": "My Jackpot Numbers"
+            }
         },
         {
             "@type": "ListItem",
             "position": 2,
             "name": "Lottery Wisdom",
-            "item": "https://sarcastic-lottery.vercel.app/blog"
+            "item": {
+                "@type": "WebPage",
+                "@id": "https://sarcastic-lottery.vercel.app/blog",
+                "name": "Lottery Education Blog"
+            }
         },
         {
             "@type": "ListItem",
             "position": 3,
             "name": "{{ post.title }}",
-            "item": "https://sarcastic-lottery.vercel.app/blog/{{ post.slug }}"
+            "item": {
+                "@type": "WebPage",
+                "@id": "https://sarcastic-lottery.vercel.app/blog/{{ post.slug }}",
+                "name": "{{ post.title }}"
+            }
         }
     ]
 }
 </script>
+
+<!-- FAQ Schema (if lottery tips/advice) -->
+{% if 'tips' in post.title.lower() or 'how' in post.title.lower() or 'guide' in post.title.lower() %}
+<script type="application/ld+json">
+{
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+        {
+            "@type": "Question",
+            "name": "What are the odds of winning the lottery?",
+            "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Lottery odds vary by game but are typically astronomical. For example, Powerball odds are 1 in 292 million, while Mega Millions odds are 1 in 302 million."
+            }
+        },
+        {
+            "@type": "Question",
+            "name": "Can lottery numbers be predicted?",
+            "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "No, lottery numbers cannot be predicted. Each drawing is completely random and independent of previous results."
+            }
+        },
+        {
+            "@type": "Question",
+            "name": "Is playing the lottery a good investment?",
+            "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "No, playing the lottery is not a good investment. The expected return is negative, making it more of an entertainment expense than an investment."
+            }
+        }
+    ]
+}
+</script>
+{% endif %}
 {% endblock %}
 
 {% block content %}
 <div class="container">
     <div class="blog-post">
-        <!-- Breadcrumb Navigation -->
+        <!-- Enhanced Breadcrumb Navigation -->
         <nav aria-label="breadcrumb" class="breadcrumb-nav">
-            <ol class="breadcrumb">
-                <li class="breadcrumb-item"><a href="/">Home</a></li>
-                <li class="breadcrumb-item"><a href="/blog">Lottery Wisdom</a></li>
-                <li class="breadcrumb-item active" aria-current="page">{{ post.title }}</li>
+            <ol class="breadcrumb" itemscope itemtype="https://schema.org/BreadcrumbList">
+                <li class="breadcrumb-item" itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+                    <a href="/" itemprop="item">
+                        <span itemprop="name">Home</span>
+                    </a>
+                    <meta itemprop="position" content="1">
+                </li>
+                <li class="breadcrumb-item" itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+                    <a href="/blog" itemprop="item">
+                        <span itemprop="name">Lottery Wisdom</span>
+                    </a>
+                    <meta itemprop="position" content="2">
+                </li>
+                <li class="breadcrumb-item active" aria-current="page" itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+                    <span itemprop="name">{{ post.title }}</span>
+                    <meta itemprop="position" content="3">
+                </li>
             </ol>
         </nav>
 
         <!-- Navigation Links at Top -->
         <div class="post-footer">
             <div class="back-links">
-                <a href="/blog" class="back-link">← All Blog Posts</a>
-                <a href="/" class="back-link">← Number Generator</a>
+                <a href="/blog" class="back-link" rel="up">← All Blog Posts</a>
+                <a href="/" class="back-link" rel="home">← Number Generator</a>
             </div>
         </div>
 
-        <header class="post-header">
-            <h1>{{ post.title }}</h1>
-            <div class="post-meta">
-                <time datetime="{{ post.publish_date }}">{{ post.date }}</time> • {{ post.read_time }} min read
-            </div>
-        </header>
+        <article itemscope itemtype="https://schema.org/Article">
+            <header class="post-header">
+                <h1 itemprop="headline">{{ post.title }}</h1>
+                <div class="post-meta">
+                    <time datetime="{{ post.publish_date }}" itemprop="datePublished">{{ post.date }}</time>
+                    <span>•</span>
+                    <span itemprop="timeRequired" content="PT{{ post.read_time }}M">{{ post.read_time }} min read</span>
+                    <meta itemprop="dateModified" content="{{ post.publish_date }}">
+                    <meta itemprop="author" content="My Jackpot Numbers Editorial Team">
+                </div>
+            </header>
 
-        <div class="post-content">
-            {{ post.content|safe }}
-        </div>
+            <div class="post-content" itemprop="articleBody">
+                {{ post.content|safe }}
+            </div>
+
+            <!-- Article Footer with Schema -->
+            <footer class="article-footer">
+                <div itemprop="publisher" itemscope itemtype="https://schema.org/Organization">
+                    <meta itemprop="name" content="My Jackpot Numbers">
+                    <meta itemprop="url" content="https://sarcastic-lottery.vercel.app">
+                </div>
+
+                <!-- Tags if available -->
+                {% if post.keywords %}
+                <div class="article-tags">
+                    <strong>Topics:</strong>
+                    {% for keyword in post.keywords.split(',') %}
+                    <span class="tag" itemprop="keywords">{{ keyword.strip() }}</span>
+                    {% endfor %}
+                </div>
+                {% endif %}
+            </footer>
+        </article>
 
         <!-- Navigation Links at Bottom -->
         <div class="post-footer">
             <div class="back-links">
-                <a href="/blog" class="back-link">← All Blog Posts</a>
-                <a href="/" class="back-link">← Number Generator</a>
+                <a href="/blog" class="back-link" rel="up">← All Blog Posts</a>
+                <a href="/" class="back-link" rel="home">← Number Generator</a>
             </div>
         </div>
     </div>

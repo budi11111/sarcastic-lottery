@@ -1,4 +1,4 @@
-from flask import Flask, render_template, jsonify, request, abort
+from flask import Flask, render_template, jsonify, request, abort, make_response
 from lottery_logic import LotteryGenerator
 from config import SARCASTIC_COMMENTS
 import random
@@ -10,11 +10,35 @@ app = Flask(__name__)
 lottery_gen = LotteryGenerator()
 
 
+# Add security and performance headers
+@app.after_request
+def after_request(response):
+    # Security headers
+    response.headers['X-Frame-Options'] = 'DENY'
+    response.headers['X-Content-Type-Options'] = 'nosniff'
+    response.headers['X-XSS-Protection'] = '1; mode=block'
+    response.headers['Referrer-Policy'] = 'strict-origin-when-cross-origin'
+    response.headers['Permissions-Policy'] = 'geolocation=(), microphone=(), camera=()'
+
+    # Performance headers
+    if request.endpoint == 'static':
+        response.headers['Cache-Control'] = 'public, max-age=31536000, immutable'
+        response.headers['Expires'] = 'Thu, 31 Dec 2025 23:55:55 GMT'
+    elif request.endpoint in ['home', 'blog', 'blog_post']:
+        response.headers['Cache-Control'] = 'public, max-age=3600, stale-while-revalidate=86400'
+    else:
+        response.headers['Cache-Control'] = 'no-cache, must-revalidate'
+
+    return response
+
+
 @app.route('/')
 def home():
     # Get recent blog posts for homepage integration
-    recent_posts = list_posts()[:3]  # Get 3 most recent posts
-    return render_template('index.html', recent_posts=recent_posts)
+    recent_posts = list_posts()[:5]  # Increased for better carousel
+    response = make_response(render_template('index.html', recent_posts=recent_posts))
+    response.headers['Cache-Control'] = 'public, max-age=1800, stale-while-revalidate=3600'
+    return response
 
 
 @app.route('/generate')
@@ -67,29 +91,33 @@ def generate_custom_numbers():
         }), 400
 
 
+# Enhanced sitemap with lastmod dates
 @app.route('/sitemap.xml')
 def sitemap():
     sitemap_xml = '''<?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+        xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">
   <url>
     <loc>https://sarcastic-lottery.vercel.app/</loc>
-    <changefreq>weekly</changefreq>
+    <lastmod>2025-08-08</lastmod>
+    <changefreq>daily</changefreq>
     <priority>1.0</priority>
   </url>
   <url>
     <loc>https://sarcastic-lottery.vercel.app/blog</loc>
+    <lastmod>2025-08-08</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>'''
 
-    # Add each PUBLISHED blog post to sitemap (list_posts already filters by publish_date)
+    # Add each PUBLISHED blog post to sitemap with lastmod
     posts = list_posts()
     for post in posts:
-        # Double-check post exists (list_posts already filters, but safety first)
         if post:
             sitemap_xml += f'''
   <url>
     <loc>https://sarcastic-lottery.vercel.app/blog/{post['slug']}</loc>
+    <lastmod>{post['publish_date']}</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>'''
@@ -97,14 +125,36 @@ def sitemap():
     sitemap_xml += '''
 </urlset>'''
 
-    return sitemap_xml, 200, {'Content-Type': 'application/xml'}
+    response = make_response(sitemap_xml)
+    response.headers['Content-Type'] = 'application/xml'
+    response.headers['Cache-Control'] = 'public, max-age=3600'
+    return response
 
 
+# Enhanced robots.txt
 @app.route('/robots.txt')
 def robots():
-    return '''User-agent: *
+    robots_txt = '''User-agent: *
 Allow: /
-Sitemap: https://sarcastic-lottery.vercel.app/sitemap.xml''', 200, {'Content-Type': 'text/plain'}
+Disallow: /static/
+Crawl-delay: 1
+
+User-agent: Googlebot
+Allow: /
+Disallow: /static/
+Crawl-delay: 0
+
+User-agent: Bingbot  
+Allow: /
+Disallow: /static/
+Crawl-delay: 1
+
+Sitemap: https://sarcastic-lottery.vercel.app/sitemap.xml'''
+
+    response = make_response(robots_txt)
+    response.headers['Content-Type'] = 'text/plain'
+    response.headers['Cache-Control'] = 'public, max-age=86400'
+    return response
 
 
 @app.route('/lottery-info')
