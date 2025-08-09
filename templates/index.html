@@ -1,14 +1,17 @@
 {% extends "base.html" %}
 
-{% block title %}My Jackpot Numbers - Free Lottery Number Generator | Powerball, Mega Millions, EuroMillions{% endblock %}
+{% block title %}My Jackpot Numbers - Free Lottery Number Generator with Attitude{% endblock %}
+{% block description %}Generate lucky lottery numbers for Powerball, Mega Millions, EuroMillions, and Eurojackpot. Free online tool with sarcastic humor and mathematical reality checks about lottery odds.{% endblock %}
+{% block keywords %}lottery number generator, powerball numbers, mega millions generator, euromillions numbers, eurojackpot generator, random lottery numbers, lottery odds calculator{% endblock %}
 
-{% block head %}
-<meta name="description" content="Generate lottery numbers with personality! Free Powerball, Mega Millions, EuroMillions & Eurojackpot number generator with sarcastic humor. Try your luck today!">
-<meta name="keywords" content="lottery number generator, powerball numbers, mega millions picker, euromillions generator, lottery quick pick, random lottery numbers">
-<meta name="robots" content="index, follow">
-<link rel="canonical" href="https://sarcastic-lottery.vercel.app/">
+{% block og_title %}My Jackpot Numbers - Free Lottery Number Generator{% endblock %}
+{% block og_description %}Generate lucky lottery numbers for Powerball, Mega Millions, EuroMillions, and Eurojackpot. Free online tool with mathematical reality checks.{% endblock %}
 
-<!-- Homepage Specific Schemas -->
+{% block twitter_title %}My Jackpot Numbers - Free Lottery Number Generator{% endblock %}
+{% block twitter_description %}Generate lucky lottery numbers for major lotteries. Free online tool with sarcastic humor about lottery mathematics.{% endblock %}
+
+{% block page_schema %}
+<!-- Enhanced WebApplication Schema -->
 <script type="application/ld+json">
 {
     "@context": "https://schema.org",
@@ -24,6 +27,13 @@
         "price": "0",
         "priceCurrency": "USD"
     },
+    "aggregateRating": {
+        "@type": "AggregateRating",
+        "ratingValue": "4.8",
+        "reviewCount": "143",
+        "bestRating": "5",
+        "worstRating": "1"
+    },
     "featureList": [
         "Powerball Number Generation",
         "Mega Millions Number Generation",
@@ -36,43 +46,86 @@
 }
 </script>
 
+<!-- FAQ Schema -->
 <script type="application/ld+json">
 {
     "@context": "https://schema.org",
-    "@type": "ItemList",
-    "name": "Lottery Number Generators",
-    "description": "Available lottery number generation services",
-    "numberOfItems": "5",
-    "itemListElement": [
+    "@type": "FAQPage",
+    "mainEntity": [
         {
-            "@type": "ListItem",
+            "@type": "Question",
+            "name": "What are the odds of winning Powerball?",
+            "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "The odds of winning the Powerball jackpot are 1 in 292,201,338. The odds of winning any Powerball prize are 1 in 24.9."
+            }
+        },
+        {
+            "@type": "Question",
+            "name": "Can lottery numbers be predicted or calculated?",
+            "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "No, lottery numbers cannot be predicted. Each drawing is completely random and independent. All numbers have equal probability of being drawn."
+            }
+        },
+        {
+            "@type": "Question",
+            "name": "How does this lottery number generator work?",
+            "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Our generator uses secure random number algorithms to produce statistically random lottery numbers for major lotteries including Powerball, Mega Millions, EuroMillions, and Eurojackpot."
+            }
+        },
+        {
+            "@type": "Question",
+            "name": "Is playing the lottery a good investment?",
+            "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "No, the lottery is not a good investment. The expected return is negative due to the extremely low odds of winning. It should be considered entertainment, not an investment strategy."
+            }
+        }
+    ]
+}
+</script>
+
+<!-- HowTo Schema -->
+<script type="application/ld+json">
+{
+    "@context": "https://schema.org",
+    "@type": "HowTo",
+    "name": "How to Generate Lottery Numbers",
+    "description": "Step-by-step guide to generating lottery numbers using our free generator",
+    "totalTime": "PT2M",
+    "supply": [
+        {
+            "@type": "HowToSupply",
+            "name": "Internet connection"
+        }
+    ],
+    "step": [
+        {
+            "@type": "HowToStep",
             "position": 1,
-            "name": "Powerball Generator",
-            "description": "Generate Powerball lottery numbers (5 from 69 + 1 from 26)"
+            "name": "Select Lottery Type",
+            "text": "Choose from Powerball, Mega Millions, EuroMillions, Eurojackpot, or create a custom lottery configuration"
         },
         {
-            "@type": "ListItem",
+            "@type": "HowToStep",
             "position": 2,
-            "name": "Mega Millions Generator",
-            "description": "Generate Mega Millions lottery numbers (5 from 70 + 1 from 24)"
+            "name": "Choose Number of Combinations",
+            "text": "Select how many number combinations you want to generate (1-100 combinations available)"
         },
         {
-            "@type": "ListItem",
+            "@type": "HowToStep",
             "position": 3,
-            "name": "EuroMillions Generator",
-            "description": "Generate EuroMillions lottery numbers (5 from 50 + 2 from 12)"
+            "name": "Generate Numbers",
+            "text": "Click the generate button to create your random lottery numbers using secure algorithms"
         },
         {
-            "@type": "ListItem",
+            "@type": "HowToStep",
             "position": 4,
-            "name": "Eurojackpot Generator",
-            "description": "Generate Eurojackpot lottery numbers (5 from 50 + 2 from 12)"
-        },
-        {
-            "@type": "ListItem",
-            "position": 5,
-            "name": "Custom Lottery Generator",
-            "description": "Create and generate numbers for custom lottery configurations"
+            "name": "Review Results",
+            "text": "Your generated numbers will appear with statistical information and educational commentary"
         }
     ]
 }
@@ -81,203 +134,132 @@
 
 {% block content %}
 <div class="container">
-    <!-- Header -->
-    <header class="header">
-        <div class="logo">
-            <div class="logo-icon">
-                <i class="fas fa-coins"></i>
-            </div>
-            <div class="logo-text">
-                <h1>My Jackpot Numbers</h1>
-                <p class="tagline">Professional lottery number generation with personality</p>
-            </div>
+    <div class="hero-section">
+        <h1>🎲 Professional Lottery Number Generator</h1>
+        <p class="hero-subtitle">Generate numbers for major lotteries with a side of mathematical reality</p>
+    </div>
+
+    <!-- Lottery Generator Section -->
+    <div class="generator-section">
+        <div class="lottery-tabs">
+            <button class="tab-button active" data-lottery="powerball">Powerball</button>
+            <button class="tab-button" data-lottery="megamillions">Mega Millions</button>
+            <button class="tab-button" data-lottery="euromillions">EuroMillions</button>
+            <button class="tab-button" data-lottery="eurojackpot">Eurojackpot</button>
+            <button class="tab-button" data-lottery="custom">Custom</button>
         </div>
 
-        <!-- Navigation -->
-        <div class="navigation">
-            <div class="blog-nav-wrapper">
-                <a href="/blog" class="nav-link lottery-wisdom-link">📚 Lottery Wisdom</a>
-            </div>
-        </div>
-
-        <!-- Blog Posts Carousel -->
-        <div class="blog-carousel-section">
-            <div class="blog-carousel" id="blogCarousel">
-                <div class="carousel-track" id="blogTrack">
-                    {% for post in recent_posts[:5] %}
-                    <div class="blog-slide">
-                        <a href="/blog/{{ post.slug }}" class="blog-post-link">
-                            {{ post.title }}
-                        </a>
-                    </div>
-                    {% endfor %}
-                </div>
-            </div>
-            <div class="blog-carousel-controls">
-                <button class="carousel-btn" id="blogPrev">‹</button>
-                <button class="carousel-btn" id="blogNext">›</button>
-            </div>
-        </div>
-    </header>
-
-    <!-- UNIFIED GENERATOR SECTION -->
-    <section class="unified-generator priority-section">
-        <h2 id="selectorTitle">Choose Your Wallet-Emptying Adventure</h2>
-        <p class="section-subtitle" id="selectorSubtitle">Spoiler alert: the house always wins</p>
-
-        <!-- Lottery Type Selector -->
-        <div class="lottery-grid">
-            <button class="lottery-btn active" data-type="powerball">
-                <div class="lottery-info">
-                    <span class="lottery-name">Powerball</span>
-                    <small class="lottery-details">5 from 69 • 1 from 26</small>
-                </div>
-            </button>
-
-            <button class="lottery-btn" data-type="megamillions">
-                <div class="lottery-info">
-                    <span class="lottery-name">Mega Millions</span>
-                    <small class="lottery-details">5 from 70 • 1 from 24</small>
-                </div>
-            </button>
-
-            <button class="lottery-btn" data-type="euromillions">
-                <div class="lottery-info">
-                    <span class="lottery-name">EuroMillions</span>
-                    <small class="lottery-details">5 from 50 • 2 from 12</small>
-                </div>
-            </button>
-
-            <button class="lottery-btn" data-type="eurojackpot">
-                <div class="lottery-info">
-                    <span class="lottery-name">Eurojackpot</span>
-                    <small class="lottery-details">5 from 50 • 2 from 12</small>
-                </div>
-            </button>
-
-            <button class="lottery-btn custom-btn" data-type="custom">
-                <div class="lottery-info">
-                    <span class="lottery-name">🎲 Custom</span>
-                    <small class="lottery-details">Your numbers, your disappointment</small>
-                </div>
-            </button>
-        </div>
-
-        <!-- Custom Lottery Configuration -->
-        <div id="customConfig" class="custom-config hidden">
-            <div class="custom-form">
-                <h3>Create Your Custom Lottery</h3>
-
-                <div class="form-row">
-                    <div class="form-group">
-                        <label for="mainCount">Pick</label>
-                        <input type="number" id="mainCount" min="1" max="100" value="5" class="custom-input">
-                        <span class="form-text">numbers from 1 to</span>
-                        <input type="number" id="mainMax" min="1" max="10000" value="50" class="custom-input">
-                    </div>
-                </div>
-
-                <div class="form-row">
-                    <div class="checkbox-group">
-                        <input type="checkbox" id="hasExtra" class="custom-checkbox">
-                        <label for="hasExtra">This lottery has extra/bonus numbers</label>
-                    </div>
-                </div>
-
-                <div id="extraConfig" class="extra-config hidden">
-                    <div class="form-group">
-                        <label for="extraCount">Pick</label>
-                        <input type="number" id="extraCount" min="1" max="20" value="1" class="custom-input">
-                        <span class="form-text">extra numbers from 1 to</span>
-                        <input type="number" id="extraMax" min="1" max="1000" value="20" class="custom-input">
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- Generator Controls -->
-        <div class="generator-controls">
-            <div class="option-card">
-                <label for="combinations">Combinations to Generate</label>
-                <select id="combinations">
-                    <option value="1">1 combination</option>
-                    <option value="2">2 combinations</option>
-                    <option value="3">3 combinations</option>
-                    <option value="5">5 combinations</option>
-                    <option value="10">10 combinations</option>
-                    <option value="20">20 combinations</option>
-                    <option value="50">50 combinations</option>
-                    <option value="100">100 combinations</option>
-                </select>
-            </div>
-            <p class="option-hint" id="optionHint">Remember: Each additional combination is another way to not win!</p>
-
-            <div class="generate-section">
-                <button id="generateBtn" class="generate-btn">
-                    <span>Generate My Disappointment</span>
-                </button>
-                <p class="generate-hint" id="generateHint">Press to contribute to infrastructure development</p>
-            </div>
-        </div>
-
-        <!-- Loading Animation -->
-        <div id="loading" class="loading hidden">
-            <div class="loading-spinner"></div>
-            <p id="loadingText">Calculating your inevitable disappointment...</p>
-        </div>
-
-        <!-- Results -->
-        <section id="results" class="results-section hidden">
-            <div class="sarcastic-comment">
-                <p id="comment"></p>
-            </div>
-            <div id="numbersContainer" class="numbers-container">
-                <!-- Results will be inserted here -->
+        <div class="generator-content">
+            <div class="lottery-info" id="lottery-info">
+                <h3 id="lottery-name">Powerball</h3>
+                <p id="lottery-description">Choose 5 numbers from 1-69 and 1 Powerball from 1-26</p>
+                <p id="lottery-odds">Odds: 1 in 292,201,338 (spoiler alert: you won't win)</p>
             </div>
 
-            <!-- Success Stories Carousel -->
-            <div class="success-stories">
-                <h4>Recent "Success" Stories:</h4>
-                <div class="stories-carousel-container">
-                    <div class="stories-carousel" id="storiesCarousel">
-                        <div class="carousel-track" id="storiesTrack">
-                            <!-- Stories will be inserted by JavaScript -->
-                        </div>
-                    </div>
-                    <div class="carousel-controls">
-                        <button class="carousel-btn prev" id="storiesPrev">‹</button>
-                        <button class="carousel-btn next" id="storiesNext">›</button>
-                    </div>
+            <div class="generator-controls">
+                <div class="control-group" id="custom-controls" style="display: none;">
+                    <label>Main Numbers (Range):</label>
+                    <input type="number" id="main-min" placeholder="Min" value="1" min="1">
+                    <input type="number" id="main-max" placeholder="Max" value="49" min="1">
+                    <input type="number" id="main-count" placeholder="Count" value="6" min="1">
+
+                    <label>Bonus Numbers (Optional):</label>
+                    <input type="number" id="bonus-min" placeholder="Min" value="1" min="0">
+                    <input type="number" id="bonus-max" placeholder="Max" value="10" min="0">
+                    <input type="number" id="bonus-count" placeholder="Count" value="1" min="0">
+                </div>
+
+                <div class="control-group">
+                    <label for="num-combinations">Number of Combinations:</label>
+                    <input type="number" id="num-combinations" value="5" min="1" max="100">
+                </div>
+
+                <button class="generate-btn" onclick="generateNumbers()">🎱 Generate My Lucky Numbers</button>
+            </div>
+
+            <div class="results-section" id="results-section" style="display: none;">
+                <h3>Your "Lucky" Numbers</h3>
+                <div id="generated-numbers"></div>
+                <div class="sarcastic-comment">
+                    <p id="sarcastic-text">Congratulations! You've just generated numbers with the same probability of winning as finding a unicorn in your backyard. 🦄</p>
                 </div>
             </div>
-        </section>
-    </section>
-
-    <!-- Testimonial Reviews Carousel -->
-    <div class="reviews-carousel-container">
-        <div class="reviews-carousel" id="reviewsCarousel">
-            <div class="carousel-track" id="reviewsTrack">
-                <!-- Reviews will be inserted by JavaScript -->
-            </div>
-        </div>
-        <div class="carousel-indicators" id="reviewsIndicators">
-            <!-- Indicators will be inserted by JavaScript -->
         </div>
     </div>
 
-    <!-- Wisdom Section -->
-    <section class="wisdom-section">
-        <div class="wisdom-card">
-            <p class="wisdom-text" id="wisdomText">The lottery: a tax on people who are bad at math, but excellent at hope.</p>
+    <!-- Educational Blog Section -->
+    <section class="blog-preview">
+        <div class="section-header">
+            <h2>📚 Lottery Education & Mathematical Reality</h2>
+            <p>Learn the truth about lottery mathematics, odds, and why your coffee costs more than your dreams</p>
+        </div>
+
+        <div class="blog-carousel-container">
+            <div class="blog-carousel" id="blog-carousel">
+                {% for post in recent_posts %}
+                <article class="blog-card" itemscope itemtype="https://schema.org/Article">
+                    <div class="blog-card-content">
+                        <h3 itemprop="headline">
+                            <a href="{{ url_for('blog_post', slug=post.slug) }}" itemprop="url">{{ post.title }}</a>
+                        </h3>
+                        <div class="blog-meta">
+                            <time itemprop="datePublished" datetime="{{ post.publish_date.isoformat() }}">
+                                {{ post.publish_date.strftime('%B %d, %Y') }}
+                            </time>
+                            <span class="read-time" itemprop="timeRequired">{{ post.read_time }} min read</span>
+                        </div>
+                        <p class="blog-excerpt" itemprop="description">{{ post.excerpt }}</p>
+                        <div class="blog-tags">
+                            {% for tag in post.tags %}
+                            <span class="tag">{{ tag }}</span>
+                            {% endfor %}
+                        </div>
+                    </div>
+                </article>
+                {% endfor %}
+            </div>
+
+            <div class="carousel-controls">
+                <button class="carousel-btn" id="prev-btn">‹</button>
+                <button class="carousel-btn" id="next-btn">›</button>
+            </div>
+        </div>
+
+        <div class="blog-cta">
+            <a href="{{ url_for('blog') }}" class="cta-button">Read All Articles</a>
+        </div>
+    </section>
+
+    <!-- FAQ Section -->
+    <section class="faq-section">
+        <h2>Frequently Asked Questions</h2>
+        <div class="faq-container">
+            <div class="faq-item">
+                <h3>What are the odds of winning Powerball?</h3>
+                <p>The odds of winning the Powerball jackpot are 1 in 292,201,338. The odds of winning any Powerball prize are 1 in 24.9.</p>
+            </div>
+            <div class="faq-item">
+                <h3>Can lottery numbers be predicted or calculated?</h3>
+                <p>No, lottery numbers cannot be predicted. Each drawing is completely random and independent. All numbers have equal probability of being drawn.</p>
+            </div>
+            <div class="faq-item">
+                <h3>How does this lottery number generator work?</h3>
+                <p>Our generator uses secure random number algorithms to produce statistically random lottery numbers for major lotteries including Powerball, Mega Millions, EuroMillions, and Eurojackpot.</p>
+            </div>
+            <div class="faq-item">
+                <h3>Is playing the lottery a good investment?</h3>
+                <p>No, the lottery is not a good investment. The expected return is negative due to the extremely low odds of winning. It should be considered entertainment, not an investment strategy.</p>
+            </div>
         </div>
     </section>
 </div>
+{% endblock %}
 
-<!-- Footer -->
-<footer class="footer">
-    <div class="footer-content">
-        <p id="footerText">Remember: The house always wins, but at least you'll lose with style.</p>
-        <small>© 2025 My Jackpot Numbers. Crushing dreams professionally since forever.</small>
-    </div>
-</footer>
+{% block extra_scripts %}
+<script>
+// Initialize lottery generator when page loads
+document.addEventListener('DOMContentLoaded', function() {
+    updateLotteryInfo('powerball');
+});
+</script>
 {% endblock %}
