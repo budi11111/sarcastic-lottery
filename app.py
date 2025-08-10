@@ -4,6 +4,7 @@ from config import SARCASTIC_COMMENTS
 import random
 import os
 import markdown
+from markdown.extensions import toc
 from datetime import datetime, time
 
 app = Flask(__name__)
@@ -259,23 +260,29 @@ def load_post(slug):
 
     # Convert markdown to HTML with full extension support
     try:
-        # Convert markdown to HTML - simplified for reliability
-        html_content = markdown.markdown(
-            body,
-            extensions=['extra']  # 'extra' includes tables, fenced_code, and more
-        )
-
-    except ImportError:
-        # Fallback if extensions aren't available
-        # Convert markdown to HTML with TOC support
-        # Simplified TOC processing
-        html_content = markdown.markdown(
-            body,
-            extensions=['toc', 'extra'],
+        # Create markdown instance with proper TOC configuration
+        md = markdown.Markdown(
+            extensions=[
+                'toc',
+                'extra',
+                'codehilite'
+            ],
             extension_configs={
-                'toc': {'marker': '[TOC]'}
+                'toc': {
+                    'marker': '[TOC]',
+                    'title': '',
+                    'anchorlink': True,
+                    'permalink': False,
+                    'slugify': lambda value, separator: value.lower().replace(' ', '-').replace('&', 'and')
+                }
             }
         )
+        html_content = md.convert(body)
+
+    except Exception as e:
+        print(f"TOC processing failed: {e}")
+        # Fallback without TOC
+        html_content = markdown.markdown(body, extensions=['extra'])
 
     post = {
         'slug': slug,
