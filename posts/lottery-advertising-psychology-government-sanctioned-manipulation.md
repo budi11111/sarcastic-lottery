@@ -15,7 +15,7 @@ Welcome to the most successful **government-sponsored psychological manipulation
 
 Lottery advertising represents the perfect storm of **behavioral psychology, predatory marketing, and government-sanctioned exploitation**. It's the only industry where taxpayer-funded agencies actively encourage taxpayers to gamble away their paychecks while calling it "funding education." The irony is so thick you could cut it with a losing scratch-off ticket.
 
-📋 Table of Contents
+## 📋 Table of Contents
 - [The $374 Million Manipulation Machine](#the-374-million-manipulation-machine)
 - [The Target Demographic: Poor People with Hope](#the-target-demographic-poor-people-with-hope)
 - [The Language of False Hope](#the-language-of-false-hope)
