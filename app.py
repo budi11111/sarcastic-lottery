@@ -257,8 +257,11 @@ def load_post(slug):
         except ValueError:
             pass  # Invalid date format, show article anyway
 
-    # Convert markdown to HTML
-    html_content = markdown.markdown(body)
+    # Convert markdown to HTML with table support
+    html_content = markdown.markdown(
+        body,
+        extensions=['tables', 'fenced_code', 'codehilite']
+    )
 
     post = {
         'slug': slug,

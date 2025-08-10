@@ -127,6 +127,66 @@ body {
     }
 }
 
+/* Blog post image containment */
+.blog-post-content img,
+.post-content img,
+.blog-content img {
+    max-width: 100%;
+    height: auto;
+    display: block;
+    margin: 20px auto;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+/* Ensure images don't break out of containers */
+.container img {
+    max-width: 100%;
+    height: auto;
+}
+
+/* Enhanced blog post styling */
+.blog-post-content,
+.post-content {
+    max-width: 800px;
+    margin: 0 auto;
+    line-height: 1.8;
+    font-size: 16px;
+}
+
+/* Table styling for blog posts */
+.blog-post-content table,
+.post-content table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 20px 0;
+    background: white;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.blog-post-content th,
+.post-content th {
+    background: #667eea;
+    color: white;
+    padding: 12px 15px;
+    text-align: left;
+    font-weight: 600;
+}
+
+.blog-post-content td,
+.post-content td {
+    padding: 12px 15px;
+    border-bottom: 1px solid #eee;
+}
+
+.blog-post-content tr:hover,
+.post-content tr:hover {
+    background: #f8f9ff;
+}
+
+
 /* Prefers-reduced-motion */
 @media (prefers-reduced-motion: reduce) {
     .loading-spinner {
