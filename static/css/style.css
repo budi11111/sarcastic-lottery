@@ -186,6 +186,97 @@ body {
     background: #f8f9ff;
 }
 
+/* Universal blog image containment - covers all possible classes */
+.blog-content img,
+.post-content img,
+.blog-post-content img,
+.blog-body img,
+.post-body img,
+.content img,
+article img,
+.container img {
+    max-width: 100% !important;
+    height: auto !important;
+    display: block;
+    margin: 20px auto;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    object-fit: cover;
+}
+
+/* Ensure no image breaks container bounds */
+img {
+    max-width: 100% !important;
+    height: auto !important;
+}
+
+/* Responsive image scaling */
+@media (max-width: 768px) {
+    .blog-content img,
+    .post-content img,
+    .blog-post-content img,
+    article img {
+        margin: 15px auto;
+        border-radius: 6px;
+    }
+}
+
+/* Blog post table styling */
+.post-content table,
+.blog-post-content table,
+.blog-content table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 24px auto;
+    background: white;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    font-size: 14px;
+}
+
+.post-content th,
+.blog-post-content th {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    padding: 16px 20px;
+    text-align: left;
+    font-weight: 600;
+    font-size: 15px;
+}
+
+.post-content td,
+.blog-post-content td {
+    padding: 16px 20px;
+    border-bottom: 1px solid #e5e7eb;
+    vertical-align: top;
+}
+
+.post-content tr:nth-child(even),
+.blog-post-content tr:nth-child(even) {
+    background: #f8fafc;
+}
+
+.post-content tr:hover,
+.blog-post-content tr:hover {
+    background: #f1f5f9;
+    transition: background-color 0.2s ease;
+}
+
+/* Mobile table responsiveness */
+@media (max-width: 768px) {
+    .post-content table,
+    .blog-post-content table {
+        font-size: 12px;
+        margin: 16px auto;
+    }
+
+    .post-content th,
+    .post-content td {
+        padding: 12px 10px;
+    }
+}
+
 
 /* Prefers-reduced-motion */
 @media (prefers-reduced-motion: reduce) {
