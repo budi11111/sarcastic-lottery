@@ -67,8 +67,6 @@ This is the logical fallacy that keeps lotteries profitable. Yes, *technically* 
 
 ### European Lottery Odds Comparison
 
-### European Lottery Odds Comparison
-
 | Lottery      | Jackpot Odds      | Maximum Prize | Draw Frequency |
 |--------------|-------------------|---------------|----------------|
 | Eurojackpot  | 1 in 139,838,160  | €120 million  | Twice weekly   |

@@ -259,16 +259,12 @@ def load_post(slug):
 
     # Convert markdown to HTML with full extension support
     try:
+        # Convert markdown to HTML - simplified for reliability
         html_content = markdown.markdown(
             body,
-            extensions=[
-                'markdown.extensions.tables',  # Full table support
-                'markdown.extensions.fenced_code',  # Code blocks
-                'markdown.extensions.codehilite',  # Syntax highlighting
-                'markdown.extensions.nl2br',  # Newline to break
-                'markdown.extensions.extra'  # Includes tables + more
-            ]
+            extensions=['extra']  # 'extra' includes tables, fenced_code, and more
         )
+
     except ImportError:
         # Fallback if extensions aren't available
         html_content = markdown.markdown(
