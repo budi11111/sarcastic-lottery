@@ -195,6 +195,22 @@ Sitemap: https://sarcastic-lottery.vercel.app/sitemap.xml'''
     response.headers['Cache-Control'] = 'public, max-age=86400'
     return response
 
+@app.route('/sitemap-debug')
+def sitemap_debug():
+    """Debug route to see what's happening with posts"""
+    try:
+        posts = list_posts()
+        debug_info = {
+            'posts_count': len(posts) if posts else 0,
+            'posts': posts[:3] if posts else [],  # Show first 3 posts
+            'current_time': datetime.now().isoformat(),
+            'list_posts_function_exists': 'list_posts' in globals()
+        }
+        return debug_info
+    except Exception as e:
+        return {'error': str(e), 'type': type(e).__name__}
+
+
 
 @app.route('/lottery-info')
 def lottery_info():
