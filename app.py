@@ -268,12 +268,13 @@ def load_post(slug):
     except ImportError:
         # Fallback if extensions aren't available
         # Convert markdown to HTML with TOC support
+        # Simplified TOC processing
         html_content = markdown.markdown(
             body,
-            extensions=[
-                'extra',  # Tables, fenced_code, etc.
-                'toc'  # Table of contents with anchor generation
-            ]
+            extensions=['toc', 'extra'],
+            extension_configs={
+                'toc': {'marker': '[TOC]'}
+            }
         )
 
     post = {
