@@ -1,4 +1,4 @@
-from flask import Flask, render_template, jsonify, request, abort, make_response
+from flask import Flask, render_template, jsonify, request, abort, Response, make_response
 from lottery_logic import LotteryGenerator
 from config import SARCASTIC_COMMENTS
 import random
@@ -94,46 +94,85 @@ def generate_custom_numbers():
 # Enhanced sitemap with lastmod dates
 @app.route('/sitemap.xml')
 def sitemap():
-    sitemap_xml = '''<?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
-        xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">
+    """Generate dynamic sitemap with proper error handling"""
+    try:
+        current_date = datetime.now().strftime('%Y-%m-%d')
+
+        sitemap_xml = '''<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
     <loc>https://sarcastic-lottery.vercel.app/</loc>
-    <lastmod>2025-08-08</lastmod>
+    <lastmod>{}</lastmod>
     <changefreq>daily</changefreq>
     <priority>1.0</priority>
   </url>
   <url>
     <loc>https://sarcastic-lottery.vercel.app/blog</loc>
-    <lastmod>2025-08-08</lastmod>
+    <lastmod>{}</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
-  </url>'''
+  </url>'''.format(current_date, current_date)
 
-    # Add each PUBLISHED blog post to sitemap with lastmod
-    posts = list_posts()
-    for post in posts:
-        if post:
-            sitemap_xml += f'''
+        # Safely get blog posts with error handling
+        try:
+            posts = list_posts()
+            if posts:
+                for post in posts:
+                    if post and 'slug' in post and 'publish_date' in post:
+                        # Ensure proper date formatting for Google
+                        try:
+                            if isinstance(post['publish_date'], str):
+                                # If it's already a string, use as is
+                                post_date = post['publish_date']
+                            else:
+                                # If it's a datetime object, format it
+                                post_date = post['publish_date'].strftime('%Y-%m-%d')
+                        except:
+                            # Fallback to current date if there's any date issue
+                            post_date = current_date
+
+                        sitemap_xml += f'''
   <url>
     <loc>https://sarcastic-lottery.vercel.app/blog/{post['slug']}</loc>
-    <lastmod>{post['publish_date']}</lastmod>
+    <lastmod>{post_date}</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>'''
+        except Exception as e:
+            # If posts loading fails, continue with basic sitemap
+            print(f"Warning: Could not load posts for sitemap: {e}")
 
-    sitemap_xml += '''
+        sitemap_xml += '''
 </urlset>'''
 
-    response = make_response(sitemap_xml)
-    response.headers['Content-Type'] = 'application/xml'
-    response.headers['Cache-Control'] = 'public, max-age=3600'
-    return response
+        # Create response with proper headers for Google
+        response = make_response(sitemap_xml)
+        response.headers['Content-Type'] = 'application/xml; charset=utf-8'
+        response.headers['Cache-Control'] = 'public, max-age=3600'
+        response.headers['X-Robots-Tag'] = 'noindex'
+        return response
+
+    except Exception as e:
+        # If anything fails, return a minimal valid sitemap
+        print(f"Error generating sitemap: {e}")
+        minimal_sitemap = '''<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <url>
+    <loc>https://sarcastic-lottery.vercel.app/</loc>
+    <lastmod>{}</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>1.0</priority>
+  </url>
+</urlset>'''.format(datetime.now().strftime('%Y-%m-%d'))
+
+        response = make_response(minimal_sitemap)
+        response.headers['Content-Type'] = 'application/xml; charset=utf-8'
+        return response
 
 
-# Enhanced robots.txt
 @app.route('/robots.txt')
 def robots():
+    """Generate robots.txt with proper headers"""
     robots_txt = '''User-agent: *
 Allow: /
 Disallow: /static/
@@ -152,7 +191,7 @@ Crawl-delay: 1
 Sitemap: https://sarcastic-lottery.vercel.app/sitemap.xml'''
 
     response = make_response(robots_txt)
-    response.headers['Content-Type'] = 'text/plain'
+    response.headers['Content-Type'] = 'text/plain; charset=utf-8'
     response.headers['Cache-Control'] = 'public, max-age=86400'
     return response
 
