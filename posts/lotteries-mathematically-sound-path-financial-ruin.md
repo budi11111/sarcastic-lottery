@@ -67,10 +67,11 @@ This is the logical fallacy that keeps lotteries profitable. Yes, *technically* 
 
 ### European Lottery Odds Comparison
 
-| Lottery      | Jackpot Odds      | Maximum Prize | Draw Frequency |
-|--------------|-------------------|---------------|----------------|
-| Eurojackpot  | 1 in 139,838,160  | €120 million  | Twice weekly   |
-| EuroMillions | 1 in ~140 million | Variable      | Twice weekly   |
+<table>
+<tr><th>Lottery</th><th>Jackpot Odds</th><th>Maximum Prize</th><th>Draw Frequency</th></tr>
+<tr><td>Eurojackpot</td><td>1 in 139,838,160</td><td>€120 million</td><td>Twice weekly</td></tr>
+<tr><td>EuroMillions</td><td>1 in ~140 million</td><td>Variable</td><td>Twice weekly</td></tr>
+</table>
 
 ### American Lottery Madness
 
