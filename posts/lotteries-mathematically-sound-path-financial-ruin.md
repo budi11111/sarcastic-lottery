@@ -121,7 +121,7 @@ The real jackpot isn't the money – it's the brief moment when anything seems p
 
 So go ahead, buy that ticket. Just remember: you're not investing in your future; you're purchasing a temporary suspension of reality. And honestly? Sometimes that's exactly what we need.
 
----
+--
 
 **Ready to dive deeper into lottery madness?** Check out our comprehensive guide on [lottery strategies that actually work](https://sarcastic-lottery.vercel.app/blog/why-lucky-numbers-arent-lucky) (spoiler: there aren't many), or explore [the psychology behind gambling](https://sarcastic-lottery.vercel.app/blog/lottery-superstitions-fact-fiction) to understand why we keep coming back for more mathematical punishment.
 
