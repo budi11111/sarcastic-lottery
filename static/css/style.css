@@ -277,6 +277,46 @@ img {
     }
 }
 
+/* Smooth scrolling for TOC links */
+html {
+    scroll-behavior: smooth;
+}
+
+/* TOC styling */
+.toc {
+    background: #f8fafc;
+    border: 1px solid #e2e8f0;
+    border-radius: 8px;
+    padding: 20px;
+    margin: 20px 0;
+}
+
+.toc ul {
+    list-style: none;
+    padding-left: 0;
+}
+
+.toc li {
+    margin: 8px 0;
+}
+
+.toc a {
+    color: #4f46e5;
+    text-decoration: none;
+    padding: 4px 8px;
+    border-radius: 4px;
+    transition: background-color 0.2s;
+}
+
+.toc a:hover {
+    background-color: #e0e7ff;
+    text-decoration: none;
+}
+
+/* Heading anchor offset for fixed headers */
+h1, h2, h3, h4, h5, h6 {
+    scroll-margin-top: 20px;
+}
 
 /* Prefers-reduced-motion */
 @media (prefers-reduced-motion: reduce) {
