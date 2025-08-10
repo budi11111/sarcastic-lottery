@@ -370,6 +370,33 @@ h1, h2, h3, h4, h5, h6 {
     scroll-margin-top: 20px;
 }
 
+/* Remove TOC link styling from actual headings in content */
+.post-content .toclink,
+.blog-post-content .toclink,
+article .toclink {
+    color: inherit !important;
+    text-decoration: none !important;
+    pointer-events: none; /* Disable clicking on heading links */
+}
+
+/* Style TOC links properly (only in TOC section) */
+.toc a {
+    color: #4f46e5 !important;
+    text-decoration: none;
+    font-weight: 500;
+    transition: color 0.2s;
+    pointer-events: auto; /* Enable clicking on TOC links */
+}
+
+.toc a:hover {
+    color: #667eea !important;
+    text-decoration: underline;
+}
+
+/* Ensure headings look normal */
+h1, h2, h3, h4, h5, h6 {
+    color: #2C2C2E; /* Your normal heading color */
+}
 
 
 /* Prefers-reduced-motion */
@@ -389,7 +416,73 @@ h1, h2, h3, h4, h5, h6 {
     }
 }
 
-/* Rest of existing CSS continues unchanged... */
+/* Manual TOC container styling */
+.manual-toc {
+    background: #f8fafc;
+    border-left: 4px solid #667eea;
+    padding: 20px;
+    margin: 30px 0;
+    border-radius: 0 8px 8px 0;
+}
+
+.manual-toc h3 {
+    margin: 0 0 15px 0;
+    color: #374151;
+    font-size: 1.1em;
+}
+
+/* TOC list styling */
+.toc {
+    margin: 0;
+    padding: 0;
+}
+
+.toc ul {
+    list-style: none;
+    padding-left: 0;
+    margin: 0;
+}
+
+.toc li {
+    margin: 8px 0;
+    padding-left: 20px;
+    position: relative;
+}
+
+.toc li:before {
+    content: "→";
+    position: absolute;
+    left: 0;
+    color: #667eea;
+    font-weight: bold;
+}
+
+.toc a {
+    color: #4f46e5 !important;
+    text-decoration: none;
+    font-weight: 500;
+    transition: color 0.2s;
+}
+
+.toc a:hover {
+    color: #667eea !important;
+    text-decoration: underline;
+}
+
+/* Remove all toclink styling from content headings */
+.toclink {
+    color: inherit !important;
+    text-decoration: none !important;
+    pointer-events: none !important;
+}
+
+/* Normal heading styles */
+h1, h2, h3, h4, h5, h6 {
+    color: #2C2C2E;
+    font-weight: 600;
+    margin: 30px 0 15px 0;
+    line-height: 1.3;
+}
 
 
 /* Enhanced Header Styles */

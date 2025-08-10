@@ -260,7 +260,6 @@ def load_post(slug):
 
     # Convert markdown to HTML with full extension support
     try:
-        # Create markdown instance with proper TOC configuration
         md = markdown.Markdown(
             extensions=[
                 'toc',
@@ -271,9 +270,12 @@ def load_post(slug):
                 'toc': {
                     'marker': '[TOC]',
                     'title': '',
-                    'anchorlink': True,
+                    'anchorlink': False,  # Don't add links to headings
                     'permalink': False,
-                    'slugify': lambda value, separator: value.lower().replace(' ', '-').replace('&', 'and')
+                    'toc_depth': '2-6',  # Only include H2-H6, exclude H1
+                    'slugify': lambda value, separator: value.lower().replace(' ', '-').replace(':', '').replace('?',
+                                                                                                                 '').replace(
+                        '&', 'and').replace('📋', '').strip()
                 }
             }
         )
@@ -281,7 +283,6 @@ def load_post(slug):
 
     except Exception as e:
         print(f"TOC processing failed: {e}")
-        # Fallback without TOC
         html_content = markdown.markdown(body, extensions=['extra'])
 
     post = {
