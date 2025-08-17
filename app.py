@@ -66,38 +66,9 @@ def generate_numbers():
     })
 
 
-@app.route('/generate-custom')
-def generate_custom_numbers():
-    try:
-        main_count = int(request.args.get('main_count', 5))
-        main_max = int(request.args.get('main_max', 50))
-        extra_count = int(request.args.get('extra_count', 0))
-        extra_max = int(request.args.get('extra_max', 0))
-        count = int(request.args.get('count', 1))
-
-        results = []
-        for _ in range(min(count, 100)):
-            numbers = lottery_gen.generate_custom(main_count, main_max, extra_count, extra_max)
-            results.append(numbers)
-
-        comment = random.choice(SARCASTIC_COMMENTS)
-
-        return jsonify({
-            'results': results,
-            'comment': comment,
-            'lottery_type': 'custom',
-            'count': count
-        })
-
-    except ValueError as e:
-        return jsonify({
-            'error': str(e)
-        }), 400
-
-
 @app.route('/sitemap.xml')
 def sitemap():
-    """Generate sitemap following Google's exact specifications"""
+    """Generate sitemap - Vercel handles headers"""
     try:
         from urllib.parse import quote
         import xml.sax.saxutils as saxutils
@@ -165,10 +136,9 @@ def sitemap():
             ])
 
         xml_content.append('</urlset>')
-        sitemap_xml = '\n'.join(xml_content)
 
-        # Let Vercel.json handle headers - minimal response
-        return sitemap_xml
+        # Return plain string - Vercel adds headers
+        return '\n'.join(xml_content)
 
     except Exception as e:
         print(f"Sitemap generation error: {e}")
@@ -185,8 +155,8 @@ def sitemap():
 
 @app.route('/robots.txt')
 def robots():
-    """Generate comprehensive robots.txt for all major search engines"""
-    robots_content = """User-agent: *
+    """Generate robots.txt - Vercel handles headers"""
+    return """User-agent: *
 Allow: /
 Disallow: /static/
 
@@ -212,8 +182,34 @@ Crawl-delay: 1
 
 Sitemap: https://sarcastic-lottery.vercel.app/sitemap.xml"""
 
-    # Let Vercel.json handle headers
-    return robots_content
+
+@app.route('/generate-custom')
+def generate_custom_numbers():
+    try:
+        main_count = int(request.args.get('main_count', 5))
+        main_max = int(request.args.get('main_max', 50))
+        extra_count = int(request.args.get('extra_count', 0))
+        extra_max = int(request.args.get('extra_max', 0))
+        count = int(request.args.get('count', 1))
+
+        results = []
+        for _ in range(min(count, 100)):
+            numbers = lottery_gen.generate_custom(main_count, main_max, extra_count, extra_max)
+            results.append(numbers)
+
+        comment = random.choice(SARCASTIC_COMMENTS)
+
+        return jsonify({
+            'results': results,
+            'comment': comment,
+            'lottery_type': 'custom',
+            'count': count
+        })
+
+    except ValueError as e:
+        return jsonify({
+            'error': str(e)
+        }), 400
 
 
 @app.route('/sitemap-debug')
@@ -239,7 +235,6 @@ def sitemap_debug():
         }), 500
 
 
-# Add a simple health check endpoint
 @app.route('/health')
 def health_check():
     """Simple health check for monitoring"""
@@ -250,15 +245,16 @@ def health_check():
     })
 
 
+# Add a simple health check endpoint
 @app.route('/lottery-info')
 def lottery_info():
     return jsonify(lottery_gen.get_all_lottery_info())
 
 
-# Posts directory
 POSTS_DIRECTORY = os.path.join(os.path.dirname(__file__), 'posts')
 
 
+# Posts directory
 def load_post(slug):
     """Load a single blog post from markdown file"""
     filepath = os.path.join(POSTS_DIRECTORY, slug + '.md')
@@ -385,8 +381,6 @@ def blog_post(slug):
     return render_template('blog_post.html', post=post)
 
 
-# Add this after your existing routes, before if __name__ == '__main__':
-
 @app.route('/browserconfig.xml')
 def browserconfig():
     return '''<?xml version="1.0" encoding="utf-8"?>
@@ -398,6 +392,9 @@ def browserconfig():
         </tile>
     </msapplication>
 </browserconfig>''', 200, {'Content-Type': 'application/xml'}
+
+
+# Add this after your existing routes, before if __name__ == '__main__':
 
 
 @app.errorhandler(404)
@@ -414,4 +411,6 @@ if __name__ == '__main__':
     app.run(debug=True)
 
 # For Vercel deployment
+
+
 app.debug = False
