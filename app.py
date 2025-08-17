@@ -186,6 +186,11 @@ Sitemap: https://sarcastic-lottery.vercel.app/sitemap.xml"""
 
     return Response(robots_content, mimetype='text/plain; charset=utf-8')
 
+@app.route('/sitemap_index.xml')
+def sitemap_index():
+    """Alternative sitemap name to bypass Google caching"""
+    return sitemap()  # Same content, different URL
+
 
 @app.route('/generate-custom')
 def generate_custom_numbers():
