@@ -68,7 +68,7 @@ def generate_numbers():
 
 @app.route('/sitemap.xml')
 def sitemap():
-    """Generate sitemap - Vercel handles headers"""
+    """Generate sitemap with proper XML content type"""
     try:
         from urllib.parse import quote
         import xml.sax.saxutils as saxutils
@@ -136,13 +136,14 @@ def sitemap():
             ])
 
         xml_content.append('</urlset>')
+        sitemap_xml = '\n'.join(xml_content)
 
-        # Return plain string - Vercel adds headers
-        return '\n'.join(xml_content)
+        # THE KEY FIX: Return Response with explicit mimetype
+        return Response(sitemap_xml, mimetype='application/xml; charset=utf-8')
 
     except Exception as e:
         print(f"Sitemap generation error: {e}")
-        return f'''<?xml version="1.0" encoding="UTF-8"?>
+        minimal_xml = f'''<?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
     <loc>https://sarcastic-lottery.vercel.app/</loc>
@@ -152,11 +153,12 @@ def sitemap():
   </url>
 </urlset>'''
 
-
+        # Also return Response for error case
+        return Response(minimal_xml, mimetype='application/xml; charset=utf-8')
 @app.route('/robots.txt')
 def robots():
-    """Generate robots.txt - Vercel handles headers"""
-    return """User-agent: *
+    """Generate robots.txt with proper text content type"""
+    robots_content = """User-agent: *
 Allow: /
 Disallow: /static/
 
@@ -181,6 +183,8 @@ Disallow: /static/
 Crawl-delay: 1
 
 Sitemap: https://sarcastic-lottery.vercel.app/sitemap.xml"""
+
+    return Response(robots_content, mimetype='text/plain; charset=utf-8')
 
 
 @app.route('/generate-custom')
