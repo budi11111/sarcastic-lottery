@@ -11,10 +11,13 @@ app = Flask(__name__)
 lottery_gen = LotteryGenerator()
 
 
-# Add security and performance headers
 @app.after_request
 def after_request(response):
-    # Security headers
+    # Skip header modifications for sitemap and robots.txt - let Vercel handle them
+    if request.endpoint in ['sitemap', 'robots']:
+        return response
+
+    # Security headers for other routes
     response.headers['X-Frame-Options'] = 'DENY'
     response.headers['X-Content-Type-Options'] = 'nosniff'
     response.headers['X-XSS-Protection'] = '1; mode=block'
@@ -99,13 +102,10 @@ def sitemap():
         from urllib.parse import quote
         import xml.sax.saxutils as saxutils
 
-        # Google requires current timestamp in YYYY-MM-DD format
         current_date = datetime.now().strftime('%Y-%m-%d')
-
-        # Build URLs list with strict validation
         urls = []
 
-        # Homepage - highest priority
+        # Homepage
         urls.append({
             'loc': 'https://sarcastic-lottery.vercel.app/',
             'lastmod': current_date,
@@ -121,7 +121,7 @@ def sitemap():
             'priority': '0.8'
         })
 
-        # Blog posts with error handling
+        # Blog posts
         try:
             posts = list_posts()
             if posts and isinstance(posts, list):
@@ -129,20 +129,16 @@ def sitemap():
                     if (post and isinstance(post, dict) and
                             post.get('slug') and post.get('publish_date')):
 
-                        # Validate slug
                         slug = str(post['slug']).strip()
-                        if not slug or len(slug) > 100:  # Google recommends max 100 chars
+                        if not slug or len(slug) > 100:
                             continue
 
-                        # Clean date handling
                         try:
                             post_date = str(post['publish_date']).strip()
-                            # Validate date format (YYYY-MM-DD)
                             datetime.strptime(post_date, '%Y-%m-%d')
                         except (ValueError, AttributeError):
                             post_date = current_date
 
-                        # URL encode slug properly
                         safe_slug = quote(slug, safe='-._~')
 
                         urls.append({
@@ -154,7 +150,7 @@ def sitemap():
         except Exception as e:
             print(f"Blog posts error in sitemap: {e}")
 
-        # Generate XML with Google's required format
+        # Generate XML
         xml_content = ['<?xml version="1.0" encoding="UTF-8"?>']
         xml_content.append('<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">')
 
@@ -171,19 +167,12 @@ def sitemap():
         xml_content.append('</urlset>')
         sitemap_xml = '\n'.join(xml_content)
 
-        # Google-specific response headers
-        response = make_response(sitemap_xml)
-        response.headers['Content-Type'] = 'application/xml; charset=utf-8'
-        response.headers['Cache-Control'] = 'public, max-age=3600'
-        response.headers['Access-Control-Allow-Origin'] = '*'
-        response.headers['X-Robots-Tag'] = 'noindex'
-
-        return response
+        # Let Vercel.json handle headers - minimal response
+        return sitemap_xml
 
     except Exception as e:
         print(f"Sitemap generation error: {e}")
-        # Return minimal valid sitemap as fallback
-        minimal_xml = f'''<?xml version="1.0" encoding="UTF-8"?>
+        return f'''<?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
     <loc>https://sarcastic-lottery.vercel.app/</loc>
@@ -193,13 +182,10 @@ def sitemap():
   </url>
 </urlset>'''
 
-        response = make_response(minimal_xml)
-        response.headers['Content-Type'] = 'application/xml; charset=utf-8'
-        return response
 
 @app.route('/robots.txt')
 def robots():
-    """Generate Google-compliant robots.txt"""
+    """Generate comprehensive robots.txt for all major search engines"""
     robots_content = """User-agent: *
 Allow: /
 Disallow: /static/
@@ -209,13 +195,25 @@ Allow: /
 Disallow: /static/
 Crawl-delay: 0
 
+User-agent: Bingbot
+Allow: /
+Disallow: /static/
+Crawl-delay: 1
+
+User-agent: DuckDuckBot
+Allow: /
+Disallow: /static/
+Crawl-delay: 1
+
+User-agent: YandexBot
+Allow: /
+Disallow: /static/
+Crawl-delay: 1
+
 Sitemap: https://sarcastic-lottery.vercel.app/sitemap.xml"""
 
-    response = make_response(robots_content)
-    response.headers['Content-Type'] = 'text/plain; charset=utf-8'
-    response.headers['Cache-Control'] = 'public, max-age=86400'
-    response.headers['X-Robots-Tag'] = 'noindex'
-    return response
+    # Let Vercel.json handle headers
+    return robots_content
 
 
 @app.route('/sitemap-debug')
@@ -259,6 +257,7 @@ def lottery_info():
 
 # Posts directory
 POSTS_DIRECTORY = os.path.join(os.path.dirname(__file__), 'posts')
+
 
 def load_post(slug):
     """Load a single blog post from markdown file"""
@@ -385,6 +384,7 @@ def blog_post(slug):
         return "Post not found", 404
     return render_template('blog_post.html', post=post)
 
+
 # Add this after your existing routes, before if __name__ == '__main__':
 
 @app.route('/browserconfig.xml')
@@ -399,14 +399,15 @@ def browserconfig():
     </msapplication>
 </browserconfig>''', 200, {'Content-Type': 'application/xml'}
 
+
 @app.errorhandler(404)
 def page_not_found(error):
     return render_template('404.html'), 404
 
+
 @app.errorhandler(500)
 def internal_server_error(error):
     return render_template('404.html'), 500
-
 
 
 if __name__ == '__main__':
