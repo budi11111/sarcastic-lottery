@@ -6,6 +6,12 @@
       "use": "@vercel/python"
     }
   ],
+  "rewrites": [
+    {
+      "source": "/(.*)",
+      "destination": "app.py"
+    }
+  ],
   "headers": [
     {
       "source": "/sitemap.xml",
@@ -32,12 +38,6 @@
           "value": "public, max-age=86400"
         }
       ]
-    }
-  ],
-  "routes": [
-    {
-      "src": "/(.*)",
-      "dest": "app.py"
     }
   ]
 }
