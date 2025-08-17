@@ -92,87 +92,74 @@ def generate_custom_numbers():
         }), 400
 
 
-# Enhanced sitemap with better error handling and encoding
 @app.route('/sitemap.xml')
 def sitemap():
-    """Generate dynamic sitemap with comprehensive error handling"""
+    """Generate sitemap following Google's exact specifications"""
     try:
         from urllib.parse import quote
         import xml.sax.saxutils as saxutils
 
+        # Google requires current timestamp in YYYY-MM-DD format
         current_date = datetime.now().strftime('%Y-%m-%d')
 
-        # Start with XML declaration and urlset
-        sitemap_urls = []
+        # Build URLs list with strict validation
+        urls = []
 
-        # Add homepage
-        sitemap_urls.append({
+        # Homepage - highest priority
+        urls.append({
             'loc': 'https://sarcastic-lottery.vercel.app/',
             'lastmod': current_date,
             'changefreq': 'daily',
             'priority': '1.0'
         })
 
-        # Add blog index
-        sitemap_urls.append({
+        # Blog index
+        urls.append({
             'loc': 'https://sarcastic-lottery.vercel.app/blog',
             'lastmod': current_date,
             'changefreq': 'weekly',
             'priority': '0.8'
         })
 
-        # Safely add blog posts
+        # Blog posts with error handling
         try:
             posts = list_posts()
             if posts and isinstance(posts, list):
                 for post in posts:
-                    try:
-                        if (post and isinstance(post, dict) and
-                                'slug' in post and post['slug'] and
-                                'publish_date' in post):
+                    if (post and isinstance(post, dict) and
+                            post.get('slug') and post.get('publish_date')):
 
-                            # Clean and validate slug
-                            slug = str(post['slug']).strip()
-                            if not slug:
-                                continue
+                        # Validate slug
+                        slug = str(post['slug']).strip()
+                        if not slug or len(slug) > 100:  # Google recommends max 100 chars
+                            continue
 
-                            # Handle date formatting
-                            try:
-                                if post['publish_date']:
-                                    if isinstance(post['publish_date'], str):
-                                        # Validate date format
-                                        datetime.strptime(post['publish_date'], '%Y-%m-%d')
-                                        post_date = post['publish_date']
-                                    else:
-                                        post_date = post['publish_date'].strftime('%Y-%m-%d')
-                                else:
-                                    post_date = current_date
-                            except (ValueError, AttributeError):
-                                post_date = current_date
+                        # Clean date handling
+                        try:
+                            post_date = str(post['publish_date']).strip()
+                            # Validate date format (YYYY-MM-DD)
+                            datetime.strptime(post_date, '%Y-%m-%d')
+                        except (ValueError, AttributeError):
+                            post_date = current_date
 
-                            # Escape slug for URL safety
-                            safe_slug = quote(slug, safe='-_~')
+                        # URL encode slug properly
+                        safe_slug = quote(slug, safe='-._~')
 
-                            sitemap_urls.append({
-                                'loc': f'https://sarcastic-lottery.vercel.app/blog/{safe_slug}',
-                                'lastmod': post_date,
-                                'changefreq': 'monthly',
-                                'priority': '0.7'
-                            })
-                    except Exception as e:
-                        print(f"Warning: Skipping post due to error: {e}")
-                        continue
+                        urls.append({
+                            'loc': f'https://sarcastic-lottery.vercel.app/blog/{safe_slug}',
+                            'lastmod': post_date,
+                            'changefreq': 'monthly',
+                            'priority': '0.7'
+                        })
         except Exception as e:
-            print(f"Warning: Could not load posts for sitemap: {e}")
+            print(f"Blog posts error in sitemap: {e}")
 
-        # Generate XML with proper escaping
-        xml_lines = [
-            '<?xml version="1.0" encoding="UTF-8"?>',
-            '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">'
-        ]
+        # Generate XML with Google's required format
+        xml_content = ['<?xml version="1.0" encoding="UTF-8"?>']
+        xml_content.append('<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">')
 
-        for url_data in sitemap_urls:
-            xml_lines.extend([
+        for url_data in urls:
+            xml_content.extend([
                 '  <url>',
                 f'    <loc>{saxutils.escape(url_data["loc"])}</loc>',
                 f'    <lastmod>{url_data["lastmod"]}</lastmod>',
@@ -181,19 +168,21 @@ def sitemap():
                 '  </url>'
             ])
 
-        xml_lines.append('</urlset>')
-        sitemap_xml = '\n'.join(xml_lines)
+        xml_content.append('</urlset>')
+        sitemap_xml = '\n'.join(xml_content)
 
-        # Create response with proper headers
+        # Google-specific response headers
         response = make_response(sitemap_xml)
         response.headers['Content-Type'] = 'application/xml; charset=utf-8'
         response.headers['Cache-Control'] = 'public, max-age=3600'
         response.headers['Access-Control-Allow-Origin'] = '*'
+        response.headers['X-Robots-Tag'] = 'noindex'
+
         return response
 
     except Exception as e:
-        print(f"Critical error generating sitemap: {e}")
-        # Return minimal but valid sitemap
+        print(f"Sitemap generation error: {e}")
+        # Return minimal valid sitemap as fallback
         minimal_xml = f'''<?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
@@ -202,23 +191,15 @@ def sitemap():
     <changefreq>daily</changefreq>
     <priority>1.0</priority>
   </url>
-  <url>
-    <loc>https://sarcastic-lottery.vercel.app/blog</loc>
-    <lastmod>{datetime.now().strftime('%Y-%m-%d')}</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
-  </url>
 </urlset>'''
 
         response = make_response(minimal_xml)
         response.headers['Content-Type'] = 'application/xml; charset=utf-8'
         return response
 
-
-# Enhanced robots.txt with better formatting
 @app.route('/robots.txt')
 def robots():
-    """Generate robots.txt with proper headers and format"""
+    """Generate Google-compliant robots.txt"""
     robots_content = """User-agent: *
 Allow: /
 Disallow: /static/
@@ -228,17 +209,36 @@ Allow: /
 Disallow: /static/
 Crawl-delay: 0
 
-User-agent: Bingbot
-Allow: /
-Disallow: /static/
-Crawl-delay: 1
-
 Sitemap: https://sarcastic-lottery.vercel.app/sitemap.xml"""
 
     response = make_response(robots_content)
     response.headers['Content-Type'] = 'text/plain; charset=utf-8'
     response.headers['Cache-Control'] = 'public, max-age=86400'
+    response.headers['X-Robots-Tag'] = 'noindex'
     return response
+
+
+@app.route('/sitemap-debug')
+def sitemap_debug():
+    """Debug sitemap accessibility for Google"""
+    try:
+        # Test sitemap generation
+        response = sitemap()
+
+        return jsonify({
+            'status': 'success',
+            'sitemap_accessible': True,
+            'content_type': response.headers.get('Content-Type'),
+            'content_length': len(response.get_data()),
+            'posts_count': len(list_posts()) if list_posts() else 0,
+            'timestamp': datetime.now().isoformat()
+        })
+    except Exception as e:
+        return jsonify({
+            'status': 'error',
+            'error': str(e),
+            'timestamp': datetime.now().isoformat()
+        }), 500
 
 
 # Add a simple health check endpoint
